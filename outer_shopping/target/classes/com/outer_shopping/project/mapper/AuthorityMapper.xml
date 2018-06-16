@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.outer_shopping.project.mapper.AuthorityMapper">
+
+	<!-- 
+			Authority 테이블 관련 mapper
+			+ Authority 등록
+			+ Authority 수정
+			+ Authority 삭제
+			+ Authority 조회
+	 -->
+	<!-- 전체 조회 sql -->
+	<sql id="select-authority-sql">
+		SELECT 	LOGIN_ID, LOGIN_PW, LOGIN_AUTHORITY	
+		FROM AUTHORITY
+	</sql>	 
+	 
+	<resultMap id="authority-resultmap" type="com.outer_shopping.project.vo.AuthorityVo">
+		<id column="LOGIN_ID" property="loginId"/>
+		<result column="LOGIN_PW" property="loginPw"/>
+		<result column="LOGIN_AUTHORITY" property="loginAuthority"/>
+	</resultMap>	 
+	
+	<!-- 	 authority 추가 SQL-->
+	<insert id="insertAuthority" parameterType="com.outer_shopping.project.vo.AuthorityVo">
+		INSERT INTO AUTHORITY VALUES(
+			#{loginId},
+			#{loginPw},
+			#{loginAuthority}
+		)
+	</insert>
+
+	<!-- 	 authority 수정 SQL-->
+	<update id="updateAuthority" parameterType="com.outer_shopping.project.vo.AuthorityVo">
+	 	UPDATE AUTHORITY
+	 	SET login_pw=#{loginPw},
+	 		login_authority=#{loginAuthority}
+	 	WHERE login_id=#{loginId}
+	</update>
+
+	<!-- 	authority 삭제 SQL-->
+	<delete id="deleteAuthority" parameterType="string">
+		DELETE FROM AUTHORITY WHERE login_id=#{value}
+	</delete>
+		
+	<!-- 	유저 정보 조회 SQL -->
+	<select id="selectAuthorityById" parameterType="String" resultMap="authority-resultmap">
+		<include refid="select-authority-sql"/>
+		WHERE login_id=#{value}
+	</select>
+</mapper>

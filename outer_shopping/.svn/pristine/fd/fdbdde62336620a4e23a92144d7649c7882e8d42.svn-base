@@ -1,0 +1,197 @@
+package com.outer_shopping.project.vo;
+
+import java.sql.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Entity
+public class MemberForm {
+	@Id
+	@Size(min=8, max=12, message="아이디는 8~12자입니다.")
+	private String id;			//아이디
+	
+	@NotNull
+	@Size(min=8, max=20, message="패쓰워드는 8~15자입니다.")
+	private String pw;			//비밀번호
+	
+	@NotNull
+	@Size(message="이름을 입력하시오.")
+	private String name;		//이름
+	
+	@NotNull
+	@Size(message="이메일 입력하시오.")
+	private String email;		//이메일
+	
+	@NotNull
+	@Size(message="성별을 선택하시오.")
+	private String sex;			//성별
+	
+	private String zipcode;		//우편번호
+	private String address;		//주소
+	private Date birthday;		//생일
+	private String phoneNum; 	//핸드폰번호
+	
+	//TEST
+	
+	//toString
+	/** (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "MemberForm [id=" + id + ", pw=" + pw + ", name=" + name + ", email=" + email + ", zipcode=" + zipcode
+				+ ", address=" + address + ", birthday=" + birthday + ", phoneNum=" + phoneNum + ", sex=" + sex + "]";
+	}
+
+
+	//setter/getter
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+	/**
+	 * @return the pw
+	 */
+	public String getPw() {
+		return pw;
+	}
+
+
+	/**
+	 * @param pw the pw to set
+	 */
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
+
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	/**
+	 * @return the zipcode
+	 */
+	public String getZipcode() {
+		return zipcode;
+	}
+
+
+	/**
+	 * @param zipcode the zipcode to set
+	 */
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+
+	/**
+	 * @return the address
+	 */
+	public String getAddress() {
+		return address;
+	}
+
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+	/**
+	 * @return the birthday
+	 */
+	public Date getBirthday() {
+		return birthday;
+	}
+
+
+	/**
+	 * @param birthday the birthday to set
+	 */
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+
+	/**
+	 * @return the phoneNum
+	 */
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+
+
+	/**
+	 * @param phoneNum the phoneNum to set
+	 */
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+
+
+	/**
+	 * @return the sex
+	 */
+	public String getSex() {
+		return sex;
+	}
+
+
+	/**
+	 * @param sex the sex to set
+	 */
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	
+	
+
+	
+}

@@ -1,0 +1,356 @@
+/**
+ * 
+ */
+package com.outer_shopping.project.vo;
+
+import java.io.Serializable;
+import java.sql.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+/**
+ * @author ss
+ *
+ */
+@Entity
+public class MemberVo implements Serializable {
+	@Id
+	@Size(min=8, max=15, message="아이디는 8~15자입니다.")
+	//@Pattern(regexp="\\w{8,20}",message="아이디 형식이 잘못되었습니다.")
+	private String id;			//아이디
+	
+	@NotNull
+	@Size(min=8, max=20, message="패스워드는 8~20자입니다.")
+	private String pw;			//비밀번호
+	
+	@NotNull
+	@Size(message="이름을 입력하시오.")
+	private String name;		//이름
+	
+	@NotNull
+	@Size(message="이메일 입력하시오.")
+	private String email;		//이메일
+	
+	private String phoneNum;	//핸드폰번호
+	private String zipcode;		//우편번호
+	private String address;		//주소
+	private Date birthday;		//생일
+	private String sex; 		//성별
+	private String grade; 		//등급
+	private int enabled;		//사용가능
+	
+	//default 생성자
+	public MemberVo() {}
+
+	//매개변수 있는 생성자
+	/**
+	 * @param id 아이디
+	 * @param pw 비밀번호
+	 * @param name 이름
+	 * @param email 이메일
+	 * @param phoneNum 핸드폰번호
+	 * @param zipcode 우편번호
+	 * @param address 주소
+	 * @param birthday 생일
+	 * @param grade 등급
+	 * @param enabled 사용가능
+	 */
+	public MemberVo(String id, String pw, String name, String email, String phoneNum, String zipcode, String address,
+			Date birthday, String sex, String grade, int enabled) {
+		this.id = id;
+		this.pw = pw;
+		this.name = name;
+		this.email = email;
+		this.phoneNum = phoneNum;
+		this.zipcode = zipcode;
+		this.address = address;
+		this.birthday = birthday;
+		this.sex = sex;
+		this.grade = grade;
+		this.enabled = enabled;
+	}
+
+	//toString
+	/** (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "MemberVo [id=" + id + ", pw=" + pw + ", name=" + name + ", email=" + email + ", phoneNum=" + phoneNum
+				+ ", zipcode=" + zipcode + ", address=" + address + ", birthday=" + birthday + ", sex=" + sex
+				+ ", grade=" + grade + ", enabled=" + enabled + "]";
+	}
+
+	//getter/setter
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the pw
+	 */
+	public String getPw() {
+		return pw;
+	}
+
+	/**
+	 * @param pw the pw to set
+	 */
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/**
+	 * @return the phoneNum
+	 */
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+
+	/**
+	 * @param phoneNum the phoneNum to set
+	 */
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+
+	/**
+	 * @return the zipcode
+	 */
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	/**
+	 * @param zipcode the zipcode to set
+	 */
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	/**
+	 * @return the address
+	 */
+	public String getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	/**
+	 * @return the birthday
+	 */
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	/**
+	 * @param birthday the birthday to set
+	 */
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	/**
+	 * @return the sex
+	 */
+	public String getSex() {
+		return sex;
+	}
+
+	/**
+	 * @param sex the sex to set
+	 */
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	/**
+	 * @return the grade
+	 */
+	public String getGrade() {
+		return grade;
+	}
+
+	/**
+	 * @param grade the grade to set
+	 */
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	/**
+	 * @return the enabled
+	 */
+	public int getEnabled() {
+		return enabled;
+	}
+
+	/**
+	 * @param enabled the enabled to set
+	 */
+	public void setEnabled(int enabled) {
+		this.enabled = enabled;
+	}
+
+	//hashCode
+	/** (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + enabled;
+		result = prime * result + ((grade == null) ? 0 : grade.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((phoneNum == null) ? 0 : phoneNum.hashCode());
+		result = prime * result + ((pw == null) ? 0 : pw.hashCode());
+		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
+		result = prime * result + ((zipcode == null) ? 0 : zipcode.hashCode());
+		return result;
+	}
+
+	//equals
+	/** (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof MemberVo)) {
+			return false;
+		}
+		MemberVo other = (MemberVo) obj;
+		if (address == null) {
+			if (other.address != null) {
+				return false;
+			}
+		} else if (!address.equals(other.address)) {
+			return false;
+		}
+		if (birthday == null) {
+			if (other.birthday != null) {
+				return false;
+			}
+		} else if (!birthday.equals(other.birthday)) {
+			return false;
+		}
+		if (email == null) {
+			if (other.email != null) {
+				return false;
+			}
+		} else if (!email.equals(other.email)) {
+			return false;
+		}
+		if (enabled != other.enabled) {
+			return false;
+		}
+		if (grade == null) {
+			if (other.grade != null) {
+				return false;
+			}
+		} else if (!grade.equals(other.grade)) {
+			return false;
+		}
+		if (id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		if (name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
+		if (phoneNum == null) {
+			if (other.phoneNum != null) {
+				return false;
+			}
+		} else if (!phoneNum.equals(other.phoneNum)) {
+			return false;
+		}
+		if (pw == null) {
+			if (other.pw != null) {
+				return false;
+			}
+		} else if (!pw.equals(other.pw)) {
+			return false;
+		}
+		if (sex == null) {
+			if (other.sex != null) {
+				return false;
+			}
+		} else if (!sex.equals(other.sex)) {
+			return false;
+		}
+		if (zipcode == null) {
+			if (other.zipcode != null) {
+				return false;
+			}
+		} else if (!zipcode.equals(other.zipcode)) {
+			return false;
+		}
+		return true;
+	}
+}
+

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.outer_shopping.project.mapper.MemberMapper">
+	<!-- 
+			Member 테이블 관련 mapper
+			+ Member 등록
+			+ Member 수정
+			+ Member 삭제
+			+ Member 조회
+	 -->
+	 
+	<sql id="all-column">
+		member_id, pw, name, email,	phonenum, zipcode, 
+		address, address2, sex, grade, enabled	
+	</sql> 
+	
+	<!-- 전체 조회 sql -->
+	<sql id="select-member-sql">
+		SELECT 	member_id, pw, 
+				name, email,
+				phonenum, zipcode, 
+				address, address2, sex, 
+				grade, enabled
+		FROM MEMBER
+	</sql>	 
+	 
+	<resultMap id="member-resultmap" type="com.outer_shopping.project.vo.MemberVo">
+		<id column="MEMBER_ID" property="id"/>
+		<result column="PW" property="pw"/>
+		<result column="NAME" property="name"/>
+		<result column="EMAIL" property="email"/>
+		<result column="PHONENUM" property="phoneNum"/>
+		<result column="ZIPCODE" property="zipcode"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="ADDRESS2" property="address2"/>
+		<result column="SEX" property="sex"/>
+		<result column="GRADE" property="grade"/>
+		<result column="ENABLED" property="enabled"/>
+	</resultMap>
+	
+	<!-- 아이디 확인 SQL -->
+	<select id="selectMemberId" parameterType="String" resultMap="member-resultmap">
+		<include refid="select-member-sql"/>
+		WHERE MEMBER_ID=#{value}
+	</select>
+	
+	<!-- 등록 SQL -->
+	<insert id="insertMember" parameterType="com.outer_shopping.project.vo.MemberVo">
+		INSERT INTO MEMBER
+		VALUES(
+				#{id},
+				#{pw},
+				#{name},
+				#{email},
+				#{phoneNum},
+				#{zipcode},
+				#{address},
+				#{address2},
+				#{sex},
+				#{grade},
+				#{enabled}
+			   )
+	</insert>
+	
+	<!-- 로그인 확인 SQL -->
+	
+	<select id="selectLoginCheck" parameterType="hashmap" resultMap="member-resultmap">
+		<include refid="select-member-sql"/>
+		WHERE MEMBER_ID=#{id} AND PW=#{pw}
+	</select>
+	
+	<!-- 회원 정보 SQL -->
+	<select id="selectMember" parameterType="String" resultMap="member-resultmap">
+		<include refid="select-member-sql"/>
+		WHERE MEMBER_ID=#{value}
+	</select>
+	
+	<!-- 회원 수정 SQL -->
+	<update id="updateMember" parameterType="com.outer_shopping.project.vo.MemberVo">
+		UPDATE 	MEMBER 
+		SET		PW = #{pw},
+				NAME = #{name},
+				EMAIL = #{email},
+				PHONENUM = #{phoneNum},
+				ZIPCODE = #{zipcode},
+				ADDRESS = #{address},
+				ADDRESS2 = #{address2},
+				SEX = #{sex},
+				GRADE = #{grade},
+				ENABLED = #{enabled}
+		WHERE	MEMBER_ID = #{id}
+	</update>
+	
+	
+	<!-- 회원 탈퇴 SQL -->
+	<delete id="deleteMember" parameterType="String">
+		DELETE FROM MEMBER WHERE MEMBER_ID = #{id}
+	</delete>
+</mapper>

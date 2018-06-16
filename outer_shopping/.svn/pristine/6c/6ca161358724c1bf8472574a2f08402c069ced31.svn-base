@@ -1,0 +1,118 @@
+package com.outer_shopping.project.dao.impl;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
+
+import com.outer_shopping.project.dao.MemberDao;
+import com.outer_shopping.project.vo.MemberVo;
+
+
+@Repository
+public class MemberDaoImpl implements MemberDao {
+	
+	
+	@Autowired
+	private SqlSession session;
+	
+/*	@Autowired
+	private DataSourceTransactionManager transactionManager;
+	
+	@Autowired
+	private TransactionTemplate transactionTemplate;
+	*/
+	
+	//mapper SQL_ID 메소드
+	private String makeSqlId(String id){
+		return "com.outer_shopping.project.mapper.MemberMapper."+id;
+	}
+
+	
+	//회원가입
+	/**
+	 * @see com.outer_shopping.project.dao.MemberDao#insertMember(com.outer_shopping.vo.MemberVo)
+	 */
+	@Override
+	public void insertMember(MemberVo member){
+		
+		try {
+			session.insert(makeSqlId("insertMember"),member);
+			System.out.println("회원 등록 완료");
+		} catch (Exception e) {
+			System.out.println("insertMember(dao) : ");
+			e.printStackTrace();
+		}
+		/*
+		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+			
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus status) {
+				try {
+
+					session.insert(makeSqlId("insertMember"),member);
+				} catch (Exception e) {
+					System.out.println("insertMember : ");
+				}
+				
+			}
+		});*/
+	}
+
+	/**
+	 * @see com.outer_shopping.project.dao.MemberDao#updateMember(com.outer_shopping.vo.MemberVo)
+	 */
+	@Override
+	public int updateMember(MemberVo member){
+		return 0;
+	}
+
+	/**
+	 * @see com.outer_shopping.project.dao.MemberDao#getAllMembers()
+	 */
+	@Override
+	public List<MemberVo> getAllMembers() {
+		return null;
+	}
+
+	/**
+	 * @see com.outer_shopping.project.dao.MemberDao#getMember(java.lang.String)
+	 */
+	@Override
+	public MemberVo getMember(String id){
+		return null;
+	}
+
+	/**
+	 * @see com.outer_shopping.project.dao.MemberDao#deleteMember(java.lang.String)
+	 */
+	@Override
+	public int deleteMember(String id){
+		return 0;
+	}
+
+	/**
+	 * @see com.outer_shopping.project.dao.MemberDao#isMember(java.lang.String)
+	 */
+	@Override
+	public boolean isMember(String id){
+		
+		boolean flag = false;
+		
+		try {
+			if(session.selectOne(makeSqlId("selectMemberId"), id) != null ) {
+				flag = true;
+			}
+		} catch (Exception e) {
+			System.out.println("isMember(dao) : ");
+			e.printStackTrace();
+		}
+		return flag;
+	}
+	
+}

@@ -1,0 +1,25 @@
+/**
+ * 
+ */
+package com.outer_shopping.project.service;
+
+import com.outer_shopping.project.vo.MemberVo;
+
+/**
+ * @author 김장규
+ *
+ */
+public interface MemberService {
+	
+	/**
+	 * 개인회원 가입하기
+	 * @param member
+	 */
+	void joinMember(MemberVo memberVo);
+
+	/**
+	 * id 중복확인
+	 * @param id
+	 */
+	int checkMemberId(String id);
+}

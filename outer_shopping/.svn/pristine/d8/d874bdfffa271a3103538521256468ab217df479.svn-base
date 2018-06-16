@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<context:annotation-config />
+	
+	<context:component-scan base-package="com.outer_shopping.project.dao.controller"/>
+	<context:component-scan base-package="com.outer_shopping.project.service.impl"/> 
+	<context:component-scan base-package="com.outer_shopping.project.dao.impl"/>
+	<context:component-scan base-package="com.outer_shopping.project.vo"/>
+	
+	<!-- transaction -->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
+
+			 
+	<!-- DataSource -->
+	<bean name="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		 <property name="driverClass" value="oracle.jdbc.OracleDriver" />
+		 <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		 <property name="username" value="pro" />
+		 <property name="password" value="pro" />
+	</bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="typeAliasesPackage" value="com.outer_shopping.project.mapper" />
+        <property name="mapperLocations" value="classpath:com/outer_shopping/project/mapper/*.xml" />
+    </bean>
+    
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+	 	<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/> 	 	
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+		 <property name="transactionManager" ref="transactionManager" />
+    </bean>
+
+	
+	
+<!-- 
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="txAdvisePointCut" expression="execution(* *..*daoImpl.*(..))"/>
+		<aop:advisor id="transactionAdvisor" pointcut-ref="txAdvisePointCut" advice-ref="txAdvice"/>
+	</aop:config>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="select*" read-only="true" />
+			<tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice>
+ -->
+
+</beans>

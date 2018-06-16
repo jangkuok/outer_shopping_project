@@ -1,0 +1,49 @@
+package com.outer_shopping.project.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.outer_shopping.project.dao.MemberDao;
+import com.outer_shopping.project.service.MemberService;
+import com.outer_shopping.project.vo.MemberVo;
+
+
+@Service("MemberService")
+public class MemberServiceImpl implements MemberService {
+
+	@Autowired
+	private MemberDao dao;
+	
+	@Override
+	public void joinMember(MemberVo memberVo){
+		try {
+			
+			dao.insertMember(memberVo);
+		} catch (Exception e) {
+			System.out.println("joinMember(service) : ");
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public int checkMemberId(String id) {
+		
+		int flag = 0;
+		
+		try {
+			if(dao.isMember(id) == true){
+				//1 = 아이디 존재
+				flag = 1;
+			}else {
+				flag = 0;
+			}
+		} catch (Exception e) {
+			System.out.println("checkMemberId(service) : ");
+			e.printStackTrace();
+		}
+		return flag;
+	}
+	
+	
+}

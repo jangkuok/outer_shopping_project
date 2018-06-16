@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.outer_shopping.project.mapper.AuthorityMapper">
+
+	<!-- 
+			Admin 테이블 관련 mapper
+			+ Admin 조회
+	 -->
+	 
+	<sql id="all-column">
+		ADMIN_ID, PW, NAME, ADMIN_AUTHORITY 	
+	</sql> 
+	
+	<!-- 전체 조회 sql -->
+	<sql id="select-admin-sql">
+		SELECT 	ADMIN_ID, PW, NAME, ADMIN_AUTHORITY
+		FROM AUTHORITY
+	</sql>	 
+	 
+	<resultMap id="admin-resultmap" type="com.outer_shopping.project.vo.AdminVo">
+		<id column="ADMIN_ID" property="adminId"/>
+		<result column="PW" property="pw"/>
+		<result column="NAME" property="name"/>
+		<result column="ADMIN_AUTHORITY" property="adminAuthority"/>
+	</resultMap>	 
+	
+	<!-- 	유저 정보 조회 SQL -->
+	<select id="selectAdminById" parameterType="String" resultMap="admin-resultmap">
+		<include refid="select-admin-sql"/>
+		WHERE ADMIN_ID=#{value}
+	</select>
+</mapper>
