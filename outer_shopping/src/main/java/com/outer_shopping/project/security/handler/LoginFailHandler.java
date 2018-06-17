@@ -19,7 +19,9 @@ public class LoginFailHandler implements AuthenticationFailureHandler{
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException ex)
 			throws IOException, ServletException {
 		String errorMessage = URLEncoder.encode(ex.getMessage(), "UTF-8");
-		request.setAttribute("msg",errorMessage);
+		
+		request.setAttribute("error",errorMessage);
+		
 		response.sendRedirect(request.getContextPath()+"/?"+errorMessage);
 	}
 	

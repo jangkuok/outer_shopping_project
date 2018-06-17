@@ -64,7 +64,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider{
          //PW체크
          //if(!encoder.matches(loginPw,member.getPw())){
             
-         if(!loginId.equals(member.getId()) && !loginPw.equals(member.getPw())){   
+         if(!(loginId.equals(member.getId()) && loginPw.equals(member.getPw()))){   
             System.out.println(loginId +" "+ member.getId() + " " + loginPw + " " + member.getPw());
             //Pw가 일치하지 않으면 로그인 실패 
             throw new BadCredentialsException("입력하신 ID와 패스워드가 일치하지 않습니다.");
@@ -85,7 +85,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider{
          }
          //PW체크
          //if(!encoder.matches(loginPw,admin.getPw())){
-         if(!loginId.equals(admin.getAdminId()) && !loginPw.equals(admin.getPw())){
+         if(!(loginId.equals(admin.getAdminId()) && loginPw.equals(admin.getPw()))){
             //Pw가 일치하지 않으면 로그인 실패
             throw new BadCredentialsException("입력하신 ID와 패스워드가 일치하지 않습니다.");
          }

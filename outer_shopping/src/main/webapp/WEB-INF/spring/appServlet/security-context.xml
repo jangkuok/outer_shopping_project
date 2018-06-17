@@ -24,7 +24,7 @@
 					authentication-failure-handler-ref="loginFailHandler"/> 
 					
 		<!-- 로그아웃관련설정 -->		
-	    <logout logout-url="/member/logout.do" logout-success-url="/"/>
+	    <logout logout-url="/member/logoutButton.do" logout-success-url="/"/>
 	    
 		<!-- 관리자 -->
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>

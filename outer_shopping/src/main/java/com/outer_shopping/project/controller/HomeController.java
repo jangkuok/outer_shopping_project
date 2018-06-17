@@ -47,40 +47,4 @@ public class HomeController {
 		
 		return "joinPage";
 	}	
-	
-	/**
-	 * 로그인
-	 */
-	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String loginForm(HttpSession session,Model model, @RequestParam(value="id",required=false) String id,@RequestParam(value="pw",required=false) String pw) {
-
-		if(service.loginMember(id, pw) == true) {
-			
-			MemberVo member = new MemberVo();	
-			member = service.viewMember(id); 
-			
-			session.setAttribute("loginId", id);
-			session.setAttribute("userName", member.getName());	
-			
-		}else {
-			model.addAttribute("msg","loginError");
-		}
-		
-		return "mainPage";
-	}
-	
-	/**
-	 * 로그아웃
-	 */
-	@RequestMapping(value ="/logout.do", method = RequestMethod.POST)
-	public ModelAndView logout(HttpSession session) {
-		
-		ModelAndView mv = new ModelAndView();
-		
-		session.invalidate();
-		
-		mv.setViewName("mainPage");
-		
-		return mv;
-	}
 }

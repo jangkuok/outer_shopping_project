@@ -43,35 +43,39 @@ function logoutCheck(){
 </script>
 </head>
 <body>
-<c:if test="${!empty requestScope.msg}">
-	<script>
-		alert("아이디 또는 비밀번호가 일치하지 않습니다.");
-	</script>
+	<%
+		String mg = (String)request.getAttribute("msg");
+		System.out.println(mg);
+	%>
+
+<!-- 비로그인일 경우 -->
+<sec:authorize access="!isAuthenticated()">
+<c:if test="${!empty requestScope.error}">
+
+		<script>
+			var msg = request.getAttribute("msg");	
+			alert(msg);
+		</script>
 </c:if>
-${requestScope.msg}
-<c:choose>
-	<c:when test="${sessionScope.loginId == null}">
-		<form id="loginForm" name="loginForm" action="${pageContext.request.contextPath}/loginForm.do" method="post">
-			아이디 : <input type="text" id="id" name="id">
-			패스워드 : <input type="text" id="pw" name="pw">
-			<input type="submit" id="login" name="login" value="로그인" onclick="loginCheck();" >
-			<input type="button" value="회원가입" onclick="location='${pageContext.request.contextPath}/joinPage.do'">
-		</form>
-		<input type="hidden" id="msg" name="msg" value="${msg}">
-	</c:when>
-    <c:otherwise>
-    	<sec:authorize access="hasRole('ROLE_USER')">
-	        ${sessionScope.userName}님이 환영합니다.        
-	        <form id="logoutForm" name="logoutForm" action="${pageContext.request.contextPath}/member/logout.do" method="post">
-	        	<input type="submit" id="logout" name="logout" value="로그아웃" onclick="logoutCheck();" >
-	        </form>
-	        <form id="myPage" name="myPage" action="${pageContext.request.contextPath}/member/myPage.do" method="post">
-	    		<input type="hidden" id="id" name="id" value="${sessionScope.loginId}">
-	       		<input type="submit" value="마이페이지">
-	       	</form>
-	        <input type="button" value="홈으로" onclick="location='${pageContext.request.contextPath}/.do'">
-  		</sec:authorize>             
-    </c:otherwise>
-</c:choose>
+<form id="loginForm" name="loginForm" action="${pageContext.request.contextPath}/loginForm.do" method="post">
+	아이디 : 	<input type="text" id="id" name="id">
+	패스워드 : <input type="text" id="pw" name="pw">
+	<input type="submit" id="login" name="login" value="로그인" onclick="loginCheck();" >
+	<input type="button" value="회원가입" onclick="location='${pageContext.request.contextPath}/joinPage.do'">
+</form>
+</sec:authorize>
+
+<!-- 회원로그인할 경우 -->
+<sec:authorize access="hasRole('ROLE_USER')">
+	<sec:authentication property="principal.id"/>님이 환영합니다.        
+	<form id="logoutForm" name="logoutForm" action="${pageContext.request.contextPath}/member/logoutButton.do" method="post">
+		<input type="submit" id="logout" name="logout" value="로그아웃" onclick="logoutCheck();" >
+	</form>
+	<form id="myPage" name="myPage" action="${pageContext.request.contextPath}/member/myPage.do" method="post">
+		<input type="hidden" id="id" name="id" value="${sessionScope.loginId}">
+		<input type="submit" value="마이페이지">
+	</form>
+	<input type="button" value="홈으로" onclick="location='${pageContext.request.contextPath}/.do'">
+</sec:authorize>
 </body>
 </html>
