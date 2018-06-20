@@ -20,7 +20,7 @@ public class AdminDaoImpl implements AdminDao {
 	 * @return
 	 */
 	private String makeSqlId(String id){
-		return "com.outer_shopping.project.mapper.AdminMapper."+id;
+		return "com.outer_shopping.project.mapper.AdminMapper."+id; 
 	}
 	
 	@Override

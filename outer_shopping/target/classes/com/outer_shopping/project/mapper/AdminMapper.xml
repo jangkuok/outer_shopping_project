@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.outer_shopping.project.mapper.AuthorityMapper">
+<mapper namespace="com.outer_shopping.project.mapper.AdminMapper">
 
 	<!-- 
 			Admin 테이블 관련 mapper
@@ -14,7 +14,7 @@
 	<!-- 전체 조회 sql -->
 	<sql id="select-admin-sql">
 		SELECT 	ADMIN_ID, PW, NAME, ADMIN_AUTHORITY
-		FROM AUTHORITY
+		FROM ADMIN
 	</sql>	 
 	 
 	<resultMap id="admin-resultmap" type="com.outer_shopping.project.vo.AdminVo">

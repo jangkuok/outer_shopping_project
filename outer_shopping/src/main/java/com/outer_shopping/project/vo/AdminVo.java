@@ -2,8 +2,12 @@ package com.outer_shopping.project.vo;
 
 import java.io.Serializable;
 
-public class AdminVo implements Serializable{
+import javax.persistence.Entity;
 
+
+@Entity
+public class AdminVo implements Serializable{
+ 
 	private String adminId; 						//관리자 아이디
 	private String pw; 								//비밀번호
 	private String name; 							//이름

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.outer_shopping.project.mapper.OuterSizeMapper">
+	<!-- 
+			OuterSize 테이블 관련 mapper
+			+ OuterSize 등록
+			+ OuterSize 수정
+			+ OuterSize 삭제
+			+ OuterSize 조회
+	 -->
+	 
+	<sql id="all-column">
+		SIZE_NO, SIZE_TYPE, CHEST,	SLEEVE,	SHOULDER, WHOLE, AMOUNT, COLOR, OUTER_NO 
+	</sql> 
+	
+	<!-- 전체 조회 sql -->
+	<sql id="select-OuterSize-sql">
+		SELECT SIZE_NO, SIZE_TYPE, CHEST, SLEEVE, SHOULDER, WHOLE, AMOUNT, COLOR, OUTER_NO 
+		FROM OUTER_SIZE
+	</sql>	
+	
+	 
+	<resultMap id="outerSize-resultmap" type="com.outer_shopping.project.vo.OuterSizeVo">
+		<id column="SIZE_NO" property="sizeNo"/>
+		<result column="SIZE_TYPE" property="type"/>
+		<result column="CHEST" property="chest"/>
+		<result column="SLEEVE" property="sleeve"/>
+		<result column="SHOULDER" property="shoulder"/>
+		<result column="WHOLE" property="whole"/>
+		<result column="AMOUNT" property="amount"/>
+		<result column="COLOR" property="color"/>
+		<result column="OUTER_NO" property="outerNo"/>
+	</resultMap>
+	
+	
+	
+	<!-- 등록 SQL -->
+	<insert id="insertSize" parameterType="com.outer_shopping.project.vo.OuterSizeVo">
+		<selectKey resultType="int" keyProperty="sizeNo" order="BEFORE">
+			select SIZE_NO.nextval from dual
+		</selectKey>
+		INSERT INTO OUTER_SIZE
+		VALUES(
+				#{sizeNo},
+				#{type},
+				#{chest},
+				#{sleeve},
+				#{shoulder},
+				#{whole},
+				#{amount},
+				#{color},
+				#{outerNo}
+			   )
+	</insert>
+	
+	
+	<!-- 상품 사이즈 목록 확인 SQL -->	 	
+	<select id="selectSizeColorCheck" parameterType="hashmap" resultMap="outerSize-resultmap">
+		<include refid="select-OuterSize-sql"/>
+		WHERE OUTER_NO = #{outerNo}
+		AND SIZE_TYPE = #{type}
+	</select>
+
+	
+<!-- 	
+	상품 수정 SQL
+	<update id="updateOuter" parameterType="com.outer_shopping.project.vo.OuterVo">
+		UPDATE 	OUTER_TB 
+		SET		
+				OUTER_TYPE = #{type},
+				OUTER_NAME = #{name},
+				OUTER_CONTENT = #{content},
+				OUTER_PRICE = #{price},
+				OUTER_COLOR = #{color},
+				OUTER_DATE = #{insertDate}
+		WHERE	OUTER_NO = #{outerNo}
+	</update>
+
+	상품 삭제 SQL
+	<delete id="deleteOuter" parameterType="int">
+		DELETE FROM OUTER_TB WHERE OUTER_NO = #{outerNo}
+	</delete>
+	
+		LIST 전체 조회 SQL
+	<select id="selectOuterList" resultMap = "outer-resultmap">
+		<include refid="select-Outer-sql"/>
+		ORDER BY OUTER_DATE DESC
+	</select> 
+	
+	
+	상품 상세정보 확인 SQL
+	<select id="selectOuterId" parameterType="int" resultMap="outer-resultmap">
+		<include refid="select-Outer-sql"/>
+		WHERE OUTER_NO=#{outerNo}
+	</select> -->
+</mapper>

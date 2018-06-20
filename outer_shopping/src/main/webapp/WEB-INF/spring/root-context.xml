@@ -3,27 +3,25 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 	<tx:annotation-driven />
-	<context:annotation-config />
 	
 	<context:component-scan base-package="com.outer_shopping.project.dao.controller"/>
 	<context:component-scan base-package="com.outer_shopping.project.service.impl"/> 
 	<context:component-scan base-package="com.outer_shopping.project.dao.impl"/>
+	<context:component-scan base-package="com.outer_shopping.project.dao.jpa.vo"/>
 	<context:component-scan base-package="com.outer_shopping.project.vo"/>
+
+	<!-- <jpa:repositories base-package="com.outer_shopping.project.dao.impl"/> -->
 
 	<!-- DataSource -->
 	<bean name="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
@@ -43,35 +41,37 @@
 	 	<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/> 	 	
 	</bean>
 	
- 	<!-- Spring/JPA --> 
-   	<jpa:repositories base-package="com.outer_shopping.project.dao" /> 
+<!-- 	
+ 	Spring/JPA 
+   	<jpa:repositories base-package="com.outer_shopping.project.dao.impl"/> 
    	
+   
    	<bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager"> 
-   		  
   		<property name="entityManagerFactory" ref="entityManagerFactory" /> 
   		<property name="jpaDialect"> 
   			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" /> 
  		</property> 
-	</bean> 
+	</bean>
 	
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> 
 		<property name="dataSource" ref="dataSource" /> 
-		<property name="packagesToScan" value="com.outer_shopping.project.vo"/> 
+		<property name="packagesToScan" value="com.outer_shopping.project.jpa"/> 
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"> 
 				<property name="generateDdl" value="true" /> 
 				<property name="showSql" value="true"/> 
-				<property name="databasePlatform" 
-						  value="org.hibernate.dialect.Oracle10gDialect"/> 
+				<property name="databasePlatform" 	value="org.hibernate.dialect.Oracle10gDialect"/> 
 				<property name="database" value="ORACLE"/> 
 			</bean> 
 		</property> 
 		<property name="jpaProperties"> 
-			<value>hibernate.cache.use_second_level_cache = true 
+			<value>
+				   hibernate.cache.use_second_level_cache = true 
 				   hibernate.cache.region.factory_class = org.hibernate.cache.ehcache.EhCacheRegionFactory 
 				   hibernate.cache.use_query_cache = true 
 				   hibernate.generate_statistics = true
 			</value> 
 		</property> 
-	</bean>
+	</bean> 
+-->
 </beans>

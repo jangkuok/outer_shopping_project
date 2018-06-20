@@ -31,7 +31,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider{
    @Autowired
    private MemberDao memberDao;
    @Autowired
-   private AdminDao adminDao;
+   private AdminDao adminDao; 
    //@Autowired
    //private PasswordEncoder encoder;
 
@@ -51,16 +51,20 @@ public class UserAuthenticationProvider implements AuthenticationProvider{
       String userAuthority = authority.getLoginAuthority();
       
       if (!userAuthority.equals("ROLE_USER") && !userAuthority.equals("ROLE_ADMIN")) {
-
+    	  
          throw new UsernameNotFoundException("권한 입력에 오류가 있는 사용자 입니다.");
       }
+      
       if(userAuthority.equals("ROLE_USER")){
+    	  
          //ID체크
-         MemberVo member = memberDao.getMember(loginId);         
+         MemberVo member = memberDao.getMember(loginId);  
+         
          if(member == null){
             //해당ID의 회원이 없으면 로그인 실패
             throw new UsernameNotFoundException("등록되지 않은 ID입니다.");
          }
+         
          //PW체크
          //if(!encoder.matches(loginPw,member.getPw())){
             
@@ -80,9 +84,11 @@ public class UserAuthenticationProvider implements AuthenticationProvider{
       if(userAuthority.equals("ROLE_ADMIN")){
          //ID체크   
          AdminVo admin = adminDao.selectAdminById(loginId);
+         
          if(admin == null){//해당ID의 회원이 없으면 로그인 실패
             throw new UsernameNotFoundException("등록되지 않은 ID입니다.");
          }
+         
          //PW체크
          //if(!encoder.matches(loginPw,admin.getPw())){
          if(!(loginId.equals(admin.getAdminId()) && loginPw.equals(admin.getPw()))){

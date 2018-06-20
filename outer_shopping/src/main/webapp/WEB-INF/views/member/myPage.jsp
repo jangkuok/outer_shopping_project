@@ -61,6 +61,11 @@ function delete_member(){
 	주소2 : ${memberVo.address2 }
 	성별 : ${memberVo.sex }
 	등급 : ${memberVo.grade }<br>
+	
+	<form id="wishListForm" name="wishListForm" action="${pageContext.request.contextPath}/member/wishListSearch.do" method="post">
+		<input type="hidden" id="id" name="id" value="${memberVo.id}">
+		<input type="submit" id="wish" name="wish" value="관심상품">
+	</form>
 	<form id="modifyForm" name="modifyForm" action="${pageContext.request.contextPath}/member/modifyPage.do" method="post">
 		<input type="hidden" id="id" name="id" value="${memberVo.id}">
 		<input type="submit" id="modify" name="modify" value="수정하기">

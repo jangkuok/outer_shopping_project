@@ -23,7 +23,7 @@ public interface MemberService {
 	 * 개인회원 가입하기
 	 * @param member
 	 */
-	void joinMember(MemberVo memberVo);
+	void joinMember(MemberVo memberVo, String id, String pw);
 	
 	/**
 	 * 회원 정보 수정하기

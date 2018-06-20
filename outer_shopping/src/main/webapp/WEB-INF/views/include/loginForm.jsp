@@ -17,8 +17,8 @@ form{
 function loginCheck(){
 	
 	var error = document.getElementById('msg').value;
-	var id = document.getElementById('id').value;
-	var pw = document.getElementById('pw').value;
+	var id = document.getElementById('loginId').value;
+	var pw = document.getElementById('loginPw').value;
 
 	if(id == ""){
         alert("아이디를 입력하세요.");
@@ -65,17 +65,34 @@ function logoutCheck(){
 </form>
 </sec:authorize>
 
-<!-- 회원로그인할 경우 -->
+<!-- 회원 로그인 할 경우 -->
 <sec:authorize access="hasRole('ROLE_USER')">
-	<sec:authentication property="principal.id"/>님이 환영합니다.        
-	<form id="logoutForm" name="logoutForm" action="${pageContext.request.contextPath}/member/logoutButton.do" method="post">
+	<sec:authentication property="principal.id"/>님 환영합니다.        
+	<form id="logoutForm" name="logoutForm" action="${pageContext.request.contextPath}/logoutButton.do" method="post">
 		<input type="submit" id="logout" name="logout" value="로그아웃" onclick="logoutCheck();" >
 	</form>
 	<form id="myPage" name="myPage" action="${pageContext.request.contextPath}/member/myPage.do" method="post">
-		<input type="hidden" id="id" name="id" value="${sessionScope.loginId}">
+		<input type="hidden" id="id" name="id" value="<sec:authentication property="principal.id"/>">
 		<input type="submit" value="마이페이지">
 	</form>
 	<input type="button" value="홈으로" onclick="location='${pageContext.request.contextPath}/.do'">
 </sec:authorize>
+
+<!-- 관리자 로그인 할 경우 -->
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+	관리자님 환영합니다.        
+	<form id="logoutForm" name="logoutForm" action="${pageContext.request.contextPath}/logoutButton.do" method="post">
+		<input type="submit" id="logout" name="logout" value="로그아웃" onclick="logoutCheck();" >
+	</form>
+	<form id="outerForm" name="outerForm" action="${pageContext.request.contextPath}/admin/outerForm.do" method="post">
+		<input type="submit" value="물품등록">
+	</form>
+	<input type="button" value="홈으로" onclick="location='${pageContext.request.contextPath}/.do'">
+</sec:authorize>
+
+
+
+
+
 </body>
 </html>

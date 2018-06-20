@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.outer_shopping.project.mapper.WishListMapper">
+	<!-- 
+			wishList 테이블 관련 mapper
+			+ wishList 등록
+			+ wishList 삭제
+			+ wishList 조회
+	 -->
+	 
+	<sql id="all-column">
+	WISH_NO, MEMBER_ID, OUTER_NO
+	</sql> 
+	
+	<!-- 전체 조회 sql -->
+	<sql id="select-wishList-sql">
+		SELECT 	WISH_NO, MEMBER_ID, OUTER_NO
+		FROM WISHLIST
+	</sql>	 
+	
+	<!-- 관심상품 + 아웃터 select sql -->
+	<sql id="select-wishList-outer-sql">
+	SELECT		w.WISH_NO, w.MEMBER_ID,
+			  	o.OUTER_TYPE, o.OUTER_NAME, 
+				o.OUTER_CONTENT, o.OUTER_PRICE, o.OUTER_DATE, o.OUTER_NO 
+	FROM		WISHLIST w, OUTER_TB o	
+	WHERE		w.OUTER_NO = o.OUTER_NO (+)
+	</sql>
+	
+	<!-- 관심상품 resultMap -->
+	<resultMap id="wishList-resultmap" type="com.outer_shopping.project.vo.WishListVo">
+		<id column="WISH_NO" property="wishNo"/>
+		<result column="MEMBER_ID" property="memberId"/>
+		<result column="OUTER_NO" property="outerNo"/>
+	</resultMap>
+	
+	<!-- 아웃터 + 사이즈 resultMap -->
+	<resultMap type="com.outer_shopping.project.vo.WishListVo" id="outer-wishList-resultmap" extends="wishList-resultmap" >
+		<collection property="list" ofType="com.outer_shopping.project.vo.OuterVo">
+			<id column="OUTER_NO" property="outerNo"/>
+			<result column="OUTER_TYPE" property="type"/>
+			<result column="OUTER_NAME" property="name"/>
+			<result column="OUTER_CONTENT" property="content"/>
+			<result column="OUTER_PRICE" property="price"/>
+			<result column="OUTER_DATE" property="insertDate"/>
+		</collection>
+	</resultMap>
+
+
+	
+	<!-- 등록 SQL -->
+	<insert id="insertWishList" parameterType="com.outer_shopping.project.vo.WishListVo">
+		<selectKey resultType="int" keyProperty="wishNo" order="BEFORE">
+			select WISH_NO.nextval from dual
+		</selectKey>
+		INSERT INTO WISHLIST
+		VALUES(
+				#{wishNo},
+				#{memberId},
+				#{outerNo}
+			   )
+	</insert>
+
+	<!-- 상품 삭제 SQL -->
+	<delete id="deleteWishList" parameterType="int">
+		DELETE FROM WISHLIST WHERE WISH_NO = #{wishNo}
+	</delete>
+	
+	
+	
+	<select id="selectWishList" parameterType="string" resultMap="outer-wishList-resultmap">
+		<include refid="select-wishList-outer-sql"/>
+		AND w.MEMBER_ID = #{memberId}
+	</select>
+	
+	
+
+
+</mapper>

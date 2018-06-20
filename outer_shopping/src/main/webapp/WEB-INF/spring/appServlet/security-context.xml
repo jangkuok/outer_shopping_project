@@ -24,13 +24,12 @@
 					authentication-failure-handler-ref="loginFailHandler"/> 
 					
 		<!-- 로그아웃관련설정 -->		
-	    <logout logout-url="/member/logoutButton.do" logout-success-url="/"/>
+	    <logout logout-url="/logoutButton.do" logout-success-url="/"/>
 	    
 		<!-- 관리자 -->
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 		<!-- 회원만 가능 -->
 		<intercept-url pattern="/member/**" access="hasRole('ROLE_USER')"/>
-	
 		<!-- 누구나 가능 -->
 		<intercept-url pattern="/**" access="permitAll"/>
 	</http>

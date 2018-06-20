@@ -12,7 +12,10 @@
 	<mappers>
 		<mapper resource="com/outer_shopping/project/mapper/MemberMapper.xml"/>
 		<mapper resource="com/outer_shopping/project/mapper/AuthorityMapper.xml"/>
-		<mapper resource="com/outer_shopping/project/mapper/Adminapper.xml"/>
+		<mapper resource="com/outer_shopping/project/mapper/AdminMapper.xml"/>
+		<mapper resource="com/outer_shopping/project/mapper/OuterMapper.xml"/>
+		<mapper resource="com/outer_shopping/project/mapper/OuterSizeMapper.xml"/>
+		<mapper resource="com/outer_shopping/project/mapper/ColorMapper.xml"/>
+
 	</mappers>
 </configuration>
-

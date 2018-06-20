@@ -13,7 +13,7 @@
 var idck = 1;
 
 //에러 존재 확인
-var id = $('#error').val();
+//var id = $('#error').val();
 
 //중복체크 jquery
 $(document).ready(function(){
@@ -98,11 +98,11 @@ function join_button(){
 			비밀번호 :  <form:password name="pw" path="pw" size="25" maxlength="20"/>
 						<form:errors path="pw" cssClass="errMsg" /><br>
 			이름 : 		<form:input name="name" path="name" size="25" maxlength="15"/>	
-						<form:errors path="name" cssClass="errMsg" /><br>
+						<form:errors path="name" cssClass="errMsg" value="${memberForm.name}"/><br>
 			핸드폰번호 : <form:input name="phoneNum" path="phoneNum" size="25" maxlength="11"/>
 						<form:errors path="phoneNum" cssClass="errMsg"/><br>
 			이메일 : 	<form:input name="email" path="email" size="25"/>
-						<form:errors name="email" path="email" cssClass="errMsg"/><br>
+						<form:errors name="email" path="email" cssClass="errMsg" value="${memberForm.email}"/><br>
 			성별 :		<form:radiobutton name="sex" path="sex" value="남자" label="남자"/>
 						<form:radiobutton name="sex" path="sex" value="여자" label="여자"/><br>
 			<form:hidden name="zipcode" path="zipcode" value=""/>	

@@ -1,7 +1,6 @@
 package com.outer_shopping.project.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -21,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.outer_shopping.project.service.MemberService;
+import com.outer_shopping.project.service.WishListSerice;
 import com.outer_shopping.project.vo.MemberVo;
+import com.outer_shopping.project.vo.WishListVo;
 
 @Controller
 @RequestMapping("/member")
@@ -31,6 +32,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private WishListSerice wishListService;
 	
 	//회원가입 성공
 	@RequestMapping("/successJoinPage.do")
@@ -59,7 +63,7 @@ public class MemberController {
 			
 		}else{
 
-			service.joinMember(memberVo);
+			service.joinMember(memberVo,memberVo.getId(),memberVo.getPw());
 			
 			mv.addObject("member", memberVo);
 			mv.setViewName("member/successJoinPage");
@@ -150,13 +154,7 @@ public class MemberController {
 			
 			session.invalidate();
 		}else {
-/*			//redirect 전송
-			Map<String, Object> map = new HashMap<String,Object>();
-		    map.put("msg", "deleteError");
-		    map.put("vo", service.viewMember(id));
-		    redirectAttributes.addFlashAttribute("memberVo", map);
-*/
-			
+
 			model.addAttribute("msg", "deleteError");
 			model.addAttribute("memberVo", service.viewMember(id));
 			
@@ -165,6 +163,18 @@ public class MemberController {
 			
 		return "mainPage";
 	}
+	
+	/**
+	 * 관심상품 조회
+	 */
+	@RequestMapping(value = "/wishListSearch.do", method = RequestMethod.POST)
+	public String wishListSearch(Model model,@RequestParam(value="id",required=false) String id) {
+		
+		List<WishListVo> list = wishListService.getWishList(id);
+		
+		model.addAttribute("list", list);
 
+		return "member/wishListPage";
+	}
 	
 }

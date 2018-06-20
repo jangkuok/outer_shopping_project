@@ -48,7 +48,7 @@ public class MemberServiceJUnitTest {
 		member.setGrade("브론즈");
 		member.setEnabled(1);
 		
-		service.joinMember(member);
+		service.joinMember(member,member.getId(),member.getPw());
 		
 	}
 

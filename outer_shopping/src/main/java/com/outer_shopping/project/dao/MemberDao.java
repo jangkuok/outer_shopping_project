@@ -60,6 +60,7 @@ public interface MemberDao {
 	 */
 	//boolean loginCheck(MemberVo member);
 	boolean loginCheck(String id, String pw);
+	
 	/**
 	 * 회원 정보
 	 * @param id

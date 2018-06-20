@@ -38,7 +38,27 @@ VALUES (user_roles_seq.nextval, 'admin', 'ROLE_ADMIN');
 		FROM MEMBER
 
 
-
-
-
-		
+create table OUTER_TB (
+OUTER_NO number(10,0) not null, 
+AMOUNT number(10,0) not null, 
+COLOR varchar2(100 char) not null, 
+CONTENT varchar2(1000 char) not null, 
+NAME varchar2(100 char) not null, 
+PRICE number(10,0) not null, 
+SIZE varchar2(10 char) not null, 
+OUTER_TYPE varchar2(100 char) not null, 
+primary key (OUTER_NO))
+	SELECT  	s.SIZE_TYPE, s.CHEST,	
+				s.SLEEVE, s.SHOULDER, 
+				s.WHOLE, s.AMOUNT, s.OUTER_NO,
+				c.COLOR_NO, c.COLOR_TYPE, c.SIZE_NO
+	FROM		OUTER_SIZE s, COLOR c	
+	WHERE		s.SIZE_NO = c.SIZE_NO(+)
+	AND			s.SIZE_NO = c.SIZE_NO(+)	
+	
+	
+	
+	
+	
+	
+	

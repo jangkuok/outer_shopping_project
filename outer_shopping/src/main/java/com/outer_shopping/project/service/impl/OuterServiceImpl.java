@@ -1,5 +1,7 @@
 package com.outer_shopping.project.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,10 +9,8 @@ import com.outer_shopping.project.dao.OuterDao;
 import com.outer_shopping.project.service.OuterService;
 import com.outer_shopping.project.vo.OuterVo;
 
-import lombok.extern.slf4j.Slf4j;
 
 @Service("OuterService")
-@Slf4j
 public class OuterServiceImpl implements OuterService {
 
 	@Autowired
@@ -28,6 +28,43 @@ public class OuterServiceImpl implements OuterService {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * 아웃터 목록
+	 */
+	@Override
+	public List<OuterVo> findOuterList() {
+		
+		List<OuterVo> list = null;
+		
+		try {
+			list = dao.selectListOuter();
+		}catch (Exception e) {
+			System.out.println("findOuterList(service) : ");
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	/**
+	 * 아웃터 상세 정보
+	 */
+	@Override
+	public OuterVo getOuter(int outerNo) {
+		
+		OuterVo outer = new OuterVo();
+		
+		try {
+			outer = dao.selectOuterId(outerNo);
+		}catch (Exception e) {
+			System.out.println("getOuter(service) : ");
+			e.printStackTrace();
+		}
+		
+		return outer;
+	}
+	
 	
 	
 }

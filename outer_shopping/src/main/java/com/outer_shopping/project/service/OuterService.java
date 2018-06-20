@@ -1,5 +1,7 @@
 package com.outer_shopping.project.service;
 
+import java.util.List;
+
 import com.outer_shopping.project.vo.OuterVo;
 
 public interface OuterService {
@@ -9,4 +11,18 @@ public interface OuterService {
 	 * @param outer
 	 */
 	void createOuter(OuterVo outer);
+	
+	/**
+	 * 아웃터 목록
+	 * @param outer
+	 */
+	List<OuterVo> findOuterList();	
+	
+	/**
+	 * 아웃터 상세 정보
+	 * @param outerId
+	 * @return
+	 */
+	OuterVo getOuter(int outerNo);
+	
 }

@@ -1,12 +1,12 @@
 package com.outer_shopping.project.service.impl;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.outer_shopping.project.dao.AuthorityDao;
 import com.outer_shopping.project.dao.MemberDao;
 import com.outer_shopping.project.service.MemberService;
+import com.outer_shopping.project.vo.AuthorityVo;
 import com.outer_shopping.project.vo.MemberVo;
 
 
@@ -15,6 +15,10 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberDao dao;
+	
+	@Autowired
+	private AuthorityDao authorityDao;
+	
 	
 	/**
 	 * 중복확인
@@ -43,8 +47,17 @@ public class MemberServiceImpl implements MemberService {
 	 * 회원가입
 	 */
 	@Override
-	public void joinMember(MemberVo memberVo){
+	public void joinMember(MemberVo memberVo, String id, String pw){
 		try {
+			
+			AuthorityVo vo = new AuthorityVo();
+			
+			vo.setLoginId(id);
+			vo.setLoginId(pw);
+			vo.setLoginAuthority("ROLE_USER");
+			
+			authorityDao.insertAuthority(vo);
+			
 			dao.insertMember(memberVo);
 		} catch (Exception e) {
 			System.out.println("joinMember(service) : ");

@@ -66,7 +66,7 @@ public class MemberVo implements Serializable {
 		this.email = email;
 		this.phoneNum = phoneNum;
 		this.zipcode = zipcode;
-		this.address = address;
+		this.address = address; 
 		this.address2 = address2;
 		this.sex = sex;
 		this.grade = grade;

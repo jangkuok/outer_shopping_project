@@ -1,0 +1,59 @@
+package com.outer_shopping.project.dao.impl;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.outer_shopping.project.dao.WishListDao;
+import com.outer_shopping.project.vo.WishListVo;
+
+@Repository
+public class WishListDaoImpl implements WishListDao {
+	
+	@Autowired
+	private SqlSession session;
+
+	/**
+	 * mapper SQL_ID 메소드
+	 * @param id
+	 * @return
+	 */
+	private String makeSqlId(String id){
+		return "com.outer_shopping.project.mapper.WishListMapper."+id;
+	}
+	
+	/**
+	 * 관심상품 등록
+	 */
+	@Override
+	public void insertWishList(WishListVo wish) {
+		try {
+			session.insert(makeSqlId("insertWishList"), wish);
+		}catch (Exception e) {
+			System.out.println("insertWishList(dao) : ");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 회원 관심상품 목록
+	 */
+	@Override
+	public List<WishListVo> selectWishList(String memberId) {
+		
+		 List<WishListVo> list = null;
+		
+		try {
+			list = session.selectList(makeSqlId("selectWishList"), memberId);
+		}catch (Exception e) {
+			System.out.println("selectWishList(dao) : ");
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+}
