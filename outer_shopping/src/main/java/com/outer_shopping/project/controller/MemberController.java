@@ -42,7 +42,7 @@ public class MemberController {
 		
 		return "/member/successJoinPage";
 	}	
-
+	
 	/**
 	 * 회원가입 폼
 	 */
@@ -54,9 +54,8 @@ public class MemberController {
 	        
 		//에러 발생시 
 		if(errors.hasErrors()) {
-			System.out.println("회원가입 에러");
-			logger.info("###########회원가입 에러###########");
-
+			logger.info("############# 회원가입 에러 #############");
+			
 			mv.addObject("error","error");
 			mv.addObject("memberVo", memberVo);
 			mv.setViewName("joinPage");
@@ -68,6 +67,7 @@ public class MemberController {
 			mv.addObject("member", memberVo);
 			mv.setViewName("member/successJoinPage");
 	       
+			logger.info("############# 회원가입 완료 #############");
 		}
 			
 		return mv;
@@ -80,13 +80,14 @@ public class MemberController {
 	@ResponseBody
 	public String MemberidCheck(@RequestParam(value="id",required=false) String id) {
 		
+		logger.info("############# 아이디 중복확인 #############");
+		
 		int cnt = 3;
 		
 		if(id.length() >= 8 ) {
-				cnt = service.checkMemberId(id);
+			cnt = service.checkMemberId(id);
 		}
-		System.out.println(id);
-		
+
 		return String.valueOf(cnt);
 	}
 	
@@ -98,6 +99,7 @@ public class MemberController {
 		
 		model.addAttribute("memberVo", service.viewMember(id));
 		
+		logger.info("############# 마이페이지 이동 #############");
 		return "member/myPage";
 	}
 	
@@ -109,6 +111,7 @@ public class MemberController {
 		
 		model.addAttribute("memberVo", service.viewMember(id));
 		
+		logger.info("############# 수정페이지 이동 #############");
 		return "member/modifyPage";
 	}
 	
@@ -123,9 +126,7 @@ public class MemberController {
 	        
 		//에러 발생시 
 		if(errors.hasErrors()) {
-			System.out.println("회원수정 에러");
-			logger.info("###########회원수정 에러###########");
-			
+			logger.info("############# 회원수정 에러 #############");
 			mv.addObject("error","error");
 			mv.addObject("memberVo", memberVo);
 			mv.setViewName("member/modifyPage");
@@ -135,6 +136,8 @@ public class MemberController {
 			service.modifyMember(memberVo);
 			mv.addObject("memberVo", memberVo);
 			mv.setViewName("member/myPage");
+			
+			logger.info("############# 회원수정 완료 #############");
 		}
 			
 		return mv;
@@ -144,23 +147,19 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "/deleteMember.do", method = RequestMethod.POST)
 	public String deleteMember(Model model,@RequestParam(value="id",required=false) String id,
-			@RequestParam(value="pw",required=false) String pw, @RequestParam(value="pw2",required=false) String pw2, HttpSession session,
-			RedirectAttributes redirectAttributes) {
-		
-		System.out.println("1" + pw + "2" + pw2);
-		
+			@RequestParam(value="pw",required=false) String pw, @RequestParam(value="pw2",required=false) String pw2) {		
 		if(pw.equals(pw2)) {
 			service.deleteMember(id);
-			
-			session.invalidate();
+			logger.info("############# 회원삭제 완료 #############");
 		}else {
 
+			logger.info("############# 회원삭제 비밀번호 불일치 #############");
 			model.addAttribute("msg", "deleteError");
 			model.addAttribute("memberVo", service.viewMember(id));
 			
 			return "member/myPage";
 		}
-			
+		logger.info("############# 메인페이지 이동 #############");
 		return "mainPage";
 	}
 	
@@ -174,7 +173,21 @@ public class MemberController {
 		
 		model.addAttribute("list", list);
 
+		logger.info("############# 관심상품페이지 이동 #############");
 		return "member/wishListPage";
+	}
+	
+	/**
+	 * 관심상품 삭제
+	 */
+	@RequestMapping(value = "/deleteWishList.do", method = RequestMethod.POST)
+	@ResponseBody
+	public void deleteWishList(@RequestParam(value="checkList[]",required=false) List<String> checkList) {
+		
+		for(int i = 0; i < checkList.size(); i++) {
+			wishListService.removeWishList(Integer.parseInt(checkList.get(i).toString()));
+			logger.info("############# 관심상품 삭제 완료  #############");
+		}
 	}
 	
 }

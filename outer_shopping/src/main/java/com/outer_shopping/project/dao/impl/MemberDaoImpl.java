@@ -90,7 +90,6 @@ public class MemberDaoImpl implements MemberDao {
 	public void updateMember(MemberVo member){
 		try {
 			session.update(makeSqlId("updateMember"),member);
-			System.out.println("회원 수정 완료");
 		} catch (Exception e) {
 			System.out.println("updateMember(dao) : ");
 			e.printStackTrace();
@@ -104,7 +103,6 @@ public class MemberDaoImpl implements MemberDao {
 	public void deleteMember(String id){
 		try {
 			session.delete(makeSqlId("deleteMember"),id);
-			System.out.println("회원 삭제 완료");
 		} catch (Exception e) {
 			System.out.println("deleteMember(dao) : ");
 			e.printStackTrace();
@@ -137,7 +135,6 @@ public class MemberDaoImpl implements MemberDao {
 			System.out.println("loginCheck(dao) : ");
 			e.printStackTrace();
 		}
-	
 		return result;
 	}
 	
@@ -147,7 +144,17 @@ public class MemberDaoImpl implements MemberDao {
 	 */
 	@Override
 	public MemberVo getMember(String id) {
-		return session.selectOne(makeSqlId("selectMember"),id);
+		
+		MemberVo member = new MemberVo();
+		
+		try {
+			member = session.selectOne(makeSqlId("selectMember"),id);
+		} catch (Exception e) {
+			System.out.println("deleteMember(dao) : ");
+			e.printStackTrace();
+		}	
+		
+		return member;
 	}
 
 

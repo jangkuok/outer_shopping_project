@@ -14,9 +14,22 @@ public class AuthorityServiceImpl implements AuthorityService {
 	@Autowired
 	private AuthorityDao authorityDao;
 	
+	/**
+	 * 권한 확인
+	 */
 	@Override
 	public AuthorityVo findAuthority(String loginId) {
-		return authorityDao.selectAuthorityById(loginId);
+		
+		AuthorityVo authority = new AuthorityVo();
+		
+		try {
+			authority = authorityDao.selectAuthorityById(loginId);
+		} catch (Exception e) {
+			System.out.println("findAuthority(service) : ");
+			e.printStackTrace();
+		}
+		
+		return authority;
 	}
 
 }

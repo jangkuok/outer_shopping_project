@@ -43,7 +43,7 @@ public interface MemberService {
 	 * @param pw
 	 * @return boolean
 	 */
-	boolean loginMember(String id, String pw);
+	//boolean loginMember(String id, String pw);
 	
 	/**
 	 * 로그인한 회원 정보

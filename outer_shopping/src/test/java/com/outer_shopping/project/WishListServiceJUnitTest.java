@@ -27,11 +27,11 @@ public class WishListServiceJUnitTest {
 	private WishListSerice service;
 	
  	/**
- 	 * 아웃터 등록 TEST
+ 	 * 관심상품 등록 TEST
  	 */
 	@Test
-	public void WishListInsertTest(){
-		log.info("######### JUnit(WishListInsertTest) 테스트 ##############");
+	public void wishListInsertTest(){
+		log.info("######### JUnit(wishListInsertTest) 테스트 ##############");
 		
 		String memberId = "kkkkkkkk";
 		int outNo = 4;
@@ -43,43 +43,40 @@ public class WishListServiceJUnitTest {
 		wish.setOuterNo(outNo);
 		
 		//service.createWishList(wish);
-		
-		
 	}
 
+	/**
+ 	 * 관심상품 삭제 TEST
+ 	 */
+	@Test
+	public void remoceWishListTest(){
+		log.info("######### JUnit(remoceWishListTest) 테스트 ##############");
+		
+		//service.removeWishList(5);
+	}
+	
+	
+	
 	/**
  	 * 관심상품 목록 TEST
  	 */
 	@Test
-	public void WishListSelectTest(){
-		log.info("######### JUnit(WishListSelectTest) 테스트 ##############");
+	public void wishListSelectTest(){
+		log.info("######### JUnit(wishListSelectTest) 테스트 ##############");
 		
-		
-		
-		service.getWishList("kkkkkkkk");
-		
+		//service.getWishList("kkkkkkkk");
 	}
 
-	 
-	
 	/**
-	 * 아웃터 상세정보 출력 TEST
-	 */
-/*	@Test
-	public void SelectOuterIdTest(){
-		log.info("######### JUnit(SelectOuterIdTest) 테스트 ##############");
+ 	 * 관심상품 중복조회 TEST
+ 	 */
+	@Test
+	public void wishListSelectOverlappedTest(){
+		log.info("######### JUnit(wishListSelectOverlappedTest) 테스트 ##############");
 		
-		int outerNo = 4;
-		int sizeNo = 8;
-		String sizeType = "S";
-		
-		//service.getOuter(outerNo);
-		
-		
-		sizeService.getListOuterSizeColor(outerNo,sizeType);
-		
-		
- 	} 
-*/
+		service.getWishListOverlapped("kkkkkkkk", 25);
+	}	 
+	
+
  	
 }

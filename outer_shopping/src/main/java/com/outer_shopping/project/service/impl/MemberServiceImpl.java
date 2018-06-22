@@ -97,7 +97,7 @@ public class MemberServiceImpl implements MemberService {
 	/**
 	 * 로그인 확인
 	 */
-	@Override
+/*	@Override
 	public boolean loginMember(String id, String pw) {
 		 
 		boolean result = dao.loginCheck(id,pw);
@@ -111,7 +111,7 @@ public class MemberServiceImpl implements MemberService {
 			e.printStackTrace();
 		}
 		return result;
-	}
+	}*/
 	
 	/**
 	 * 회원 정보
@@ -119,10 +119,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberVo viewMember(String id) {
 		
-		return dao.getMember(id);
+		MemberVo memberVo = new MemberVo();
+		
+		try {
+			memberVo = dao.getMember(id);
+		} catch (Exception e) {
+			System.out.println("viewMember(service) : ");
+			e.printStackTrace();
+		}
+		
+		return memberVo;
 	}
 
-	
-	
-	
 }

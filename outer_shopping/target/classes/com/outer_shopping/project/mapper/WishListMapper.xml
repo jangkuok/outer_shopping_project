@@ -67,13 +67,18 @@
 	</delete>
 	
 	
-	
+	<!-- 상품 List 조회 SQL -->
 	<select id="selectWishList" parameterType="string" resultMap="outer-wishList-resultmap">
 		<include refid="select-wishList-outer-sql"/>
 		AND w.MEMBER_ID = #{memberId}
 	</select>
 	
-	
+	<!-- 상품 등록 중복확인 SQL -->
+	<select id="selectWishListOverlapped" parameterType="hashmap" resultMap="wishList-resultmap">
+		<include refid="select-wishList-sql"/>
+		WHERE MEMBER_ID = #{memberId}
+		AND OUTER_NO = #{outerNo}
+	</select>
 
 
 </mapper>

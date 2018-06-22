@@ -14,7 +14,7 @@ public class AdminServiceImpl implements AdminService {
 	private AdminDao dao;
 
 	/**
-	 * 
+	 * 관리자 찾기
 	 */
 	@Override
 	public AdminVo findAdmin(String id) {

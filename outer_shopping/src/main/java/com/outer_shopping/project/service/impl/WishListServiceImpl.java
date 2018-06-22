@@ -31,6 +31,19 @@ public class WishListServiceImpl implements WishListSerice {
 	}
 
 	/**
+	 * 관심상품 삭제
+	 */	
+	@Override
+	public void removeWishList(int wishNo) {
+		try {
+			dao.deleteWishList(wishNo);
+		}catch (Exception e) {
+			System.out.println("removeWishList(service) : ");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * 회원 관심상품 목록
 	 */
 	@Override
@@ -43,6 +56,22 @@ public class WishListServiceImpl implements WishListSerice {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	/**
+	 * 회원 관심상품 중복조회
+	 */
+	@Override
+	public WishListVo getWishListOverlapped(String memberId, int outerNo) {
+		
+		WishListVo wishList = new WishListVo();
+		try {
+			wishList = dao.selectWishListOverlapped(memberId, outerNo);
+		}catch (Exception e) {
+			System.out.println("getWishListOverlapped(service) : ");
+			e.printStackTrace();
+		}
+		return wishList;
 	}
 	
 	

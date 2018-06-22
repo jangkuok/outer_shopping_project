@@ -31,18 +31,17 @@ public class HomeController {
 	@Autowired
 	private OuterService outerService;
 	
-
-	
 	/**
 	 * 메인페이지
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String mainPage(Model model) {
-		
+	
 		List<OuterVo> list = outerService.findOuterList();
 		
-		System.out.println(list);
 		model.addAttribute("list",list);
+		
+		logger.info("############# 메인페이지 이동 #############");
 		
 		return "mainPage";
 	}
@@ -55,6 +54,8 @@ public class HomeController {
 		
 		if(!model.containsAttribute("memberVo")) 
 			model.addAttribute("memberVo", new MemberVo());
+		
+		logger.info("############# 회원가입페이지 이동 #############");
 		
 		return "joinPage";
 	}	

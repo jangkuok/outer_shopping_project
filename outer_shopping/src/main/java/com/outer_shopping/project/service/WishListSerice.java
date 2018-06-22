@@ -8,5 +8,9 @@ public interface WishListSerice {
 	
 	void createWishList(WishListVo wish);
 	
+	void removeWishList(int wishNo);
+	
 	List<WishListVo> getWishList(String memberId);
+	
+	WishListVo getWishListOverlapped(String memberId,int outerNo);
 }

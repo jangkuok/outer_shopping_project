@@ -75,7 +75,6 @@ function logoutCheck(){
 		<input type="hidden" id="id" name="id" value="<sec:authentication property="principal.id"/>">
 		<input type="submit" value="마이페이지">
 	</form>
-	<input type="button" value="홈으로" onclick="location='${pageContext.request.contextPath}/.do'">
 </sec:authorize>
 
 <!-- 관리자 로그인 할 경우 -->
@@ -86,12 +85,11 @@ function logoutCheck(){
 	</form>
 	<form id="outerForm" name="outerForm" action="${pageContext.request.contextPath}/admin/outerForm.do" method="post">
 		<input type="submit" value="물품등록">
-	</form>
-	<input type="button" value="홈으로" onclick="location='${pageContext.request.contextPath}/.do'">
+	</form>	
 </sec:authorize>
 
-
-
+<input type="button" value="장바구니" onclick="location='${pageContext.request.contextPath}/outer/cartPage.do'">
+<input type="button" value="홈으로" onclick="location='${pageContext.request.contextPath}/.do'">
 
 
 </body>

@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://cdn.rawgit.com/jmnote/jquery.nonajaxform/33a7/jquery.nonajaxform.min.js"></script>
 <script type="text/javascript">
 //상품 선택하기
 $(document).ready(function() {
@@ -43,7 +44,8 @@ $(document).ready(function() {
 		
 		
 		var size = $("#sizeSelect").val();
-		var color = $("#colorSelect").val();		
+		var color = $("#colorSelect").val();
+		var no = $("#outerNo").val();
 		var name = $("#outerName").val();
 		var price = $("#outerPrice").val();
 		var selectPrice = $("#totalPrice").val();
@@ -59,7 +61,8 @@ $(document).ready(function() {
 		'<input type="button" id="close['+index+']" name="close" value="X">'+
 		'<input type="text" id="price['+index+']" name="price" value="'+price+'"></li>'; */
 		
-		var product = '<li id="selectProductItems'+index+'">'+
+		var product = '<li id="selectProductItems'+index+'" name="selectProductItems">'+
+		'<input type="hidden" id="productNo'+index+'" name="productNo" value="'+ no +'" readonly="">'+
 		'<input type="text" id="productName'+index+'" name="productName" value="'+ name +'" readonly="">'+
 		'<input type="text" id="productSize'+index+'" name="productSize" value="'+ size +'" readonly="">'+
 		'<input type="text" id="productColor'+index+'" name="productColor" value="'+ color +'" readonly="">'+
@@ -72,7 +75,7 @@ $(document).ready(function() {
 		$("#selectProduct").show();
 
 		if(color != error){
-			$('ui#selectProduct').append(product);
+			$('ul#selectProduct').append(product);
 			index++;
 			selectPrice = parseInt(selectPrice) +  parseInt(price);
 			$("#totalPrice").val(selectPrice);
@@ -112,12 +115,67 @@ $(document).ready(function() {
 			"dataType":"json",
 			"success":function(data)
 			{
+				if(data == "존재"){
+					alert("이미 등록한 상품입니다.");
+				}
+				
 				if(data == "등록완료"){
 					alert("관심상품이 등록 되었습니다.");	
 				}
 			}			
 		});
 	});
+	
+ 	$('#cartB').on('click',function(){
+	
+ 		
+ 		var childrens = $("li[name='selectProductItems']").children();
+ 		
+ 		var test = $('#productName').val();
+ 		
+ 		
+		if(test == null){
+			
+			alert("선택한 상품이 없습니다.");
+			return;
+			
+		}else{
+			
+			var productArr = []; 
+
+		    $("li[name='selectProductItems']").children().each(function(i){
+		    	productArr.push($(this).val());
+		    });
+		    
+			$.form({
+				"action": "${pageContext.request.contextPath}/outer/addCart.do",
+				"type":"GET",
+				"data": {"productList" : productArr},
+				"dataType":"text"
+			}).submit(); 
+		}
+	}); 
+	
+/* 	$("#cartB").click(function(){
+		
+		if(!$("ul[name='selectProduct']").children().val()){
+			alert("선택한 상품이 없습니다.");
+			return;
+		}
+		
+		var productArr = []; 
+
+	    $("li[name='selectProductItems']").children().each(function(i){
+	    	productArr.push($(this).val());
+	    });
+	    
+		$.form({
+			"action": "${pageContext.request.contextPath}/outer/addCart.do",
+			"data": {"productList" : productArr},
+			"dataType":"text"
+		}).submit(); 
+	}); */
+
 });
 
 //선택상품 삭제
@@ -134,11 +192,42 @@ function closeProduct(index){
 		selectPrice = parseInt(selectPrice) - parseInt(price);
 		$("#totalPrice").val(selectPrice); 
 	});
-}
+};
+/* 
+function addCart(){
+	$(document).ready(function(){
+		$('#cartB').click(function(){
+			
+			if(!($("ul[name='selectProduct']").children().val())){
+				alert("선택한 상품이 없습니다.");
+				return;
+			}else{
+				var productArr = []; 
+
+			    $("li[name='selectProductItems']").children().each(function(i){
+			    	productArr.push($(this).val());
+			    });
+			    
+				$.form({
+					"action": "${pageContext.request.contextPath}/outer/addCart.do",
+					"data": {"productList" : productArr},
+					"dataType":"text"
+				}).submit(); 
+			}
+		});
+	});	
+}; */
+
+
 </script>
 
 </head>
 <body>
+<c:if test="${not empty param.addNo}">
+	<script>
+		alert("이미 추가한 상품입니다.");
+	</script>
+</c:if>
 	<jsp:include page="include/loginForm.jsp" flush="false"/><br>
 	<input type="text" id="outerNo" value="${outer.outerNo}" readOnly=""><br>
 	<input type="text" id="content" value="${outer.content}" readOnly=""><br>
@@ -162,20 +251,22 @@ function closeProduct(index){
 		<option value="선택하세요">선택하세요</option>
 	</select>
 	
-	<ui id = "selectProduct">
+	<ul id = "selectProduct">
 		
-	</ui>
+	</ul>
 	<br><input type="text" id="totalPrice" value="0">
 	
-	<sec:authorize access="hasRole('ROLE_USER')">
-		<input type="hidden" id="id" value="<sec:authentication property="principal.id"/>">
-	</sec:authorize>	
 	<br>
 	<input type="button" id="buyB" name="buyB" value="Buy Now">
 	
-	<input type="button" id="wishB" name="wishB" value="Wish List">	
-		
+	<sec:authorize access="hasRole('ROLE_USER')">
+		<input type="hidden" id="id" value="<sec:authentication property="principal.id"/>">
+		<input type="button" id="wishB" name="wishB" value="Wish List">	
+	</sec:authorize>	
+
 	<input type="button" id="cartB" name="cartB" value="Add To Cart">
+
+	
 	
 </body>
 </html>

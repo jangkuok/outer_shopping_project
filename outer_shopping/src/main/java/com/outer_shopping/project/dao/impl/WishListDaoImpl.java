@@ -1,6 +1,8 @@
 package com.outer_shopping.project.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,21 @@ public class WishListDaoImpl implements WishListDao {
 		
 	}
 	
+	
+	/**
+	 * 관심상품 삭제
+	 */
+	@Override
+	public void deleteWishList(int wishNo) {
+		try {
+			session.delete(makeSqlId("deleteWishList"), wishNo);
+		}catch (Exception e) {
+			System.out.println("deleteWishList(dao) : ");
+			e.printStackTrace();
+		}
+		
+	}
+
 	/**
 	 * 회원 관심상품 목록
 	 */
@@ -53,6 +70,28 @@ public class WishListDaoImpl implements WishListDao {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	/**
+	 * 회원 관심상품 중복확인
+	 */
+	@Override
+	public WishListVo selectWishListOverlapped(String memberId, int outerNo) {
+		
+		WishListVo wishList = new WishListVo();
+		
+		Map<String, Object> input = new HashMap<String, Object>();
+		input.put("memberId",memberId);
+		input.put("outerNo",outerNo);
+		
+		try {
+			wishList = session.selectOne(makeSqlId("selectWishListOverlapped"), input);
+		}catch (Exception e) {
+			System.out.println("selectWishListOverlapped(dao) : ");
+			e.printStackTrace();
+		}		
+		
+		return wishList;
 	}
 	
 	
