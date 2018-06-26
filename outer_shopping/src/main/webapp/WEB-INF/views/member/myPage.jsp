@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${sessionScope.userName}님의 마이페이지</title>
+<title>${memberVo.name}님의 마이페이지</title>
 <style type="text/css">
 form{
 	display:inline
@@ -52,20 +52,21 @@ function delete_member(){
 	</script>
 </c:if>
 
-	아이디 : ${memberVo.id }
-	이름 : ${memberVo.name }
-	이메일 : ${memberVo.email }
-	핸드폰번호 : ${memberVo.phoneNum }
-	우편번호 : ${memberVo.zipcode }
-	주소 : ${memberVo.address }
-	주소2 : ${memberVo.address2 }
-	성별 : ${memberVo.sex }
+	아이디 : ${memberVo.id }<br>
+	이름 : ${memberVo.name }<br>
+	이메일 : ${memberVo.email }<br>
+	핸드폰번호 : ${memberVo.phoneNum }<br>
+	주소 : ${memberVo.zipcode})${memberVo.address} ${memberVo.address2 }<br>
 	등급 : ${memberVo.grade }<br>
 	
 	<form id="wishListForm" name="wishListForm" action="${pageContext.request.contextPath}/member/wishListSearch.do" method="post">
 		<input type="hidden" id="id" name="id" value="${memberVo.id}">
 		<input type="submit" id="wish" name="wish" value="관심상품">
 	</form>
+	<form id="orderListForm" name="orderListForm" action="${pageContext.request.contextPath}/member/orderListSearch.do" method="post">
+		<input type="hidden" id="id" name="id" value="${memberVo.id}">
+		<input type="submit" id="order" name="order" value="주문목록">
+	</form>	
 	<form id="modifyForm" name="modifyForm" action="${pageContext.request.contextPath}/member/modifyPage.do" method="post">
 		<input type="hidden" id="id" name="id" value="${memberVo.id}">
 		<input type="submit" id="modify" name="modify" value="수정하기">

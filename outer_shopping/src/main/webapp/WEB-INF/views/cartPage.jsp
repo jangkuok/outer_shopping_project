@@ -7,10 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>장바구니</title>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://cdn.rawgit.com/jmnote/jquery.nonajaxform/33a7/jquery.nonajaxform.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	
-	
 	$("#removeCart").click(function() {
 		if ( $("input[name='checkBox']:checked").size() == 0) {
 		      alert("삭제할 상품을 선택하세요.");
@@ -45,6 +44,42 @@ $(document).ready(function() {
 		} 
 	});
 });
+
+//상품 주문 
+function orderProduct(){
+	$(document).ready(function(){
+		
+		var loginId = $('#id').val();
+		
+		if ( $("input[name='checkBox']:checked").size() == 0) {
+		      alert("주문할 상품을 선택하세요.");
+		      return;
+		}
+		else if(loginId == null){
+			if(confirm('로그인 하시겠습니까?')) { 
+				location.href="${pageContext.request.contextPath}/member/orderPage.do"
+		    }else { 
+		    	return;
+		   	}		
+		}else{
+			var productArr = []; 
+			
+			$("input[name='checkBox']:checked").each(function(){
+				var no = $(this).val();
+			    $("#checkProduct"+no).children().each(function(){
+			    	productArr.push($(this).val());
+			    });    
+			});	
+			$.form({
+				"action": "${pageContext.request.contextPath}/member/orderPages.do",
+				"type":"POST",
+				"data": {"productList" : productArr, "loginId" : loginId},
+				"dataType":"text"
+			}).submit();
+		}
+	});
+};
+
 </script>
 </head>
 <body>
@@ -54,19 +89,19 @@ $(document).ready(function() {
 	<div>
 		<c:forEach var="cartList" items="${sessionScope.cart}" varStatus="st">
 			<div>
-					<div name="checkProduct${cartList.cartNo}">
-						<input type="checkBox" id="" name="checkBox" value="${cartList.cartNo}">
-						<input type="hidden" id="" name="" value="${cartList.productNo}">
-						<input type="text" id="" name="" value="${cartList.productName}">
-						<input type="text" id="" name="" value="${cartList.productSize}">
-						<input type="text" id="" name="" value="${cartList.productColor}">
-						<input type="text" id="" name="" value="${cartList.productPrice}">
+					<div id="checkProduct${cartList.cartNo}" name="checkProduct">
+						<input type="checkBox" id="checkBox" name="checkBox" value="${cartList.cartNo}">
+						<input type="hidden" id="" name="product" value="${cartList.productNo}">
+						<input type="text" id="" name="product" value="${cartList.productName}">
+						<input type="text" id="" name="product" value="${cartList.productColor}">
+						<input type="text" id="" name="product" value="${cartList.productSize}">
+						<input type="text" id="" name="product" value="${cartList.productPrice}">
 					</div>
 			</div>
 		</c:forEach>
 	</div>
 </c:if>
 	<input type="button" id="removeCart" name="removeCart" value="상품삭제">
-	<input type="button" id="" name="" value="상품주문">
+	<input type="button" id="buyB" name="buyB" value="상품주문" onclick="orderProduct();">
 </body>
 </html>

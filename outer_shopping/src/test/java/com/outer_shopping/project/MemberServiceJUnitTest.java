@@ -48,7 +48,7 @@ public class MemberServiceJUnitTest {
 		member.setGrade("브론즈");
 		member.setEnabled(1);
 		
-		service.joinMember(member,member.getId(),member.getPw());
+		//service.joinMember(member,member.getId(),member.getPw());
 		
 	}
 
@@ -99,14 +99,14 @@ public class MemberServiceJUnitTest {
  	/**
  	 * 회원 정보 수정 TEST
  	 */
-/*	
+
 	@Test
 	public void MemberModifyTest(){
 		log.info("######### JUnit(MemberModifyTest) 테스트 ##############");
 		
 		MemberVo member = new MemberVo();
 		
-		member.setId("xxxxxxxx");
+		member.setId("kkkkkkkk");
 		member.setPw("jjjjjjjj");
 		member.setName("kim");
 		member.setEmail("jangkuok@naver.com");
@@ -119,7 +119,7 @@ public class MemberServiceJUnitTest {
 		
 		service.modifyMember(member);
 	}
-*/	 	
+	 	
 	/**
  	 * 회원탈퇴 TEST
  	 */

@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.outer_shopping.project.service.OuterService;
 import com.outer_shopping.project.service.OuterSizeService;
 import com.outer_shopping.project.service.WishListSerice;
-import com.outer_shopping.project.vo.CartVo;
+import com.outer_shopping.project.vo.ProductVo;
 import com.outer_shopping.project.vo.OuterSizeVo;
 import com.outer_shopping.project.vo.OuterVo;
 import com.outer_shopping.project.vo.WishListVo;
@@ -102,35 +102,34 @@ public class OuterController {
 	public String addcart(Model model,@RequestParam(value="productList[]",required=false) List<String> productList,
 			HttpSession session, RedirectAttributes ra) {
 		
-		List<CartVo> list = new ArrayList<>();
+		List<ProductVo> list = new ArrayList<>();
+		
+		System.out.println(productList);
 		
 		//세션에 상품이 없을 경우
-		if(session.getAttribute("cart") == null) {
-			for(int i = 0; i< productList.size(); i++) {			
-				
-				CartVo cart = new CartVo();
-				
-				cart.setCartNo(i);
-				cart.setProductNo(Integer.parseInt(productList.get(i).toString()));
-				i++;
-				cart.setProductName(productList.get(i).toString());
-				i++;
-				cart.setProductColor(productList.get(i).toString());
-				i++;
-				cart.setProductSize(productList.get(i).toString());
-				i++;
-				cart.setProductPrice(productList.get(i).toString());
-				i++;
-				
-				list.add(cart);
-			}
+		for(int i = 0; i< productList.size(); i++) {			
 			
-			session.setAttribute("cart", list);
+			ProductVo cart = new ProductVo();
+			
+			cart.setCartNo(i);
+			cart.setProductNo(Integer.parseInt(productList.get(i).toString()));
+			i++;
+			cart.setProductName(productList.get(i).toString());
+			i++;
+			cart.setProductColor(productList.get(i).toString());
+			i++;
+			cart.setProductSize(productList.get(i).toString());
+			i++;
+			cart.setProductPrice(productList.get(i).toString());
+			i++;
+			
+			list.add(cart);
 		}
+		
 		//세션에 상품이 있을 경우
-		else if(session.getAttribute("cart") != null) {
+		if(session.getAttribute("cart") != null) {
 			
-			List<CartVo> arraylist =  (List)session.getAttribute("cart");
+			List<ProductVo> arraylist =  (List)session.getAttribute("cart");
 			for(int i=0; i < arraylist.size(); i++) {
 				
 				for(int j = 0; j < list.size(); j++) {
@@ -141,11 +140,12 @@ public class OuterController {
 						
 						ra.addAttribute("addNo", "error");
 						ra.addAttribute("outerNo",arraylist.get(i).getProductNo());
+						
 						logger.info("############# 장바구니 존재 #############");
 						return "redirect:/outer/outerView.do";
 					}
 				}
-				CartVo cart = new CartVo();
+				ProductVo cart = new ProductVo();
 				
 				cart.setCartNo(i);
 				cart.setProductNo(arraylist.get(i).getProductNo());
@@ -156,9 +156,9 @@ public class OuterController {
 			 
 			    list.add(cart); 
 			    System.out.println(list);
-			}		
-			session.setAttribute("cart", list);
+			}			
 		}			
+		session.setAttribute("cart", list);
 		
 		logger.info("############# 장바구니 등록 완료 #############");
 		return "redirect:/outer/cartPage.do";
@@ -178,16 +178,16 @@ public class OuterController {
 	@ResponseBody
 	public String deleteCart(@RequestParam(value="checkList[]",required=false) List<String> checkList, HttpSession session) {
 		
-		List<CartVo> list = new ArrayList<>();
+		List<ProductVo> list = new ArrayList<>();
 		
-		List<CartVo> arraylist =  (List)session.getAttribute("cart");
+		List<ProductVo> arraylist =  (List)session.getAttribute("cart");
 	
 		for(int i=0; i < arraylist.size(); i++) {			
 			for(int j = 0; j < checkList.size(); j++) {
 				if(arraylist.get(i).getCartNo() == Integer.parseInt(checkList.get(j))) {
 					arraylist.remove(i);
 				}else {
-					CartVo cart = new CartVo();					
+					ProductVo cart = new ProductVo();					
 					cart.setCartNo(i);
 					cart.setProductNo(arraylist.get(i).getProductNo());
 					cart.setProductName(arraylist.get(i).getProductName());
@@ -201,7 +201,12 @@ public class OuterController {
 		}
 		
 		session.setAttribute("cart", list);
-	
+		
+		if(list.size() == 0) {
+			session.invalidate();
+			return "삭제";
+		}
+		
 		return "삭제";
 	}
 }

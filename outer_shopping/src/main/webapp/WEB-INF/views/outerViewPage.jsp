@@ -125,44 +125,14 @@ $(document).ready(function() {
 			}			
 		});
 	});
-	
+/* 	
  	$('#cartB').on('click',function(){
-	
- 		
- 		var childrens = $("li[name='selectProductItems']").children();
- 		
- 		var test = $('#productName').val();
- 		
- 		
-		if(test == null){
-			
-			alert("선택한 상품이 없습니다.");
-			return;
-			
-		}else{
-			
-			var productArr = []; 
 
-		    $("li[name='selectProductItems']").children().each(function(i){
-		    	productArr.push($(this).val());
-		    });
-		    
-			$.form({
-				"action": "${pageContext.request.contextPath}/outer/addCart.do",
-				"type":"GET",
-				"data": {"productList" : productArr},
-				"dataType":"text"
-			}).submit(); 
-		}
-	}); 
-	
-/* 	$("#cartB").click(function(){
-		
-		if(!$("ul[name='selectProduct']").children().val()){
+		if($("ul[name='selectProduct']").children().size() == 0){
 			alert("선택한 상품이 없습니다.");
 			return;
 		}
-		
+	
 		var productArr = []; 
 
 	    $("li[name='selectProductItems']").children().each(function(i){
@@ -171,11 +141,13 @@ $(document).ready(function() {
 	    
 		$.form({
 			"action": "${pageContext.request.contextPath}/outer/addCart.do",
+			"type":"GET",
 			"data": {"productList" : productArr},
 			"dataType":"text"
 		}).submit(); 
-	}); */
-
+		
+	}); 
+ */	
 });
 
 //선택상품 삭제
@@ -193,31 +165,66 @@ function closeProduct(index){
 		$("#totalPrice").val(selectPrice); 
 	});
 };
-/* 
+
+//카트 등록
 function addCart(){
 	$(document).ready(function(){
-		$('#cartB').click(function(){
-			
-			if(!($("ul[name='selectProduct']").children().val())){
+			var size = $("li[name='selectProductItems']").size();
+	
+			if(size == 0){
 				alert("선택한 상품이 없습니다.");
 				return;
-			}else{
-				var productArr = []; 
-
-			    $("li[name='selectProductItems']").children().each(function(i){
-			    	productArr.push($(this).val());
-			    });
-			    
-				$.form({
-					"action": "${pageContext.request.contextPath}/outer/addCart.do",
-					"data": {"productList" : productArr},
-					"dataType":"text"
-				}).submit(); 
 			}
-		});
-	});	
-}; */
+			
+			var productArr = []; 
 
+		    $("li[name='selectProductItems']").children().each(function(i){
+		    	productArr.push($(this).val());
+		    });
+		    
+			$.form({
+				"action": "${pageContext.request.contextPath}/outer/addCart.do",
+				"type":"GET",
+				"data": {"productList" : productArr},
+				"dataType":"text"
+			}).submit();	
+		});
+};
+
+//상품 주문 
+function orderProduct(){
+	$(document).ready(function(){
+		
+		var loginId = $('#id').val();
+		
+		var size = $("li[name='selectProductItems']").size();
+		
+		if(size == 0){
+			alert("선택한 상품이 없습니다.");
+			return;
+		}
+		else if(loginId == null){
+			if(confirm('로그인 하시겠습니까?')) { 
+				location.href="${pageContext.request.contextPath}/member/orderPage.do"
+		    }else { 
+		    	return;
+		   	}		
+		}else{
+			var productArr = []; 
+
+		    $("li[name='selectProductItems']").children().each(function(i){
+		    	productArr.push($(this).val());
+		    });
+		    
+			$.form({
+				"action": "${pageContext.request.contextPath}/member/orderPage.do",
+				"type":"POST",
+				"data": {"productList" : productArr, "loginId" : loginId},
+				"dataType":"text"
+			}).submit();
+		}
+	});
+};
 
 </script>
 
@@ -253,18 +260,20 @@ function addCart(){
 	
 	<ul id = "selectProduct">
 		
-	</ul>
-	<br><input type="text" id="totalPrice" value="0">
+	</ul><br>
 	
-	<br>
-	<input type="button" id="buyB" name="buyB" value="Buy Now">
+	<input type="text" id="totalPrice" value="0"><br>
+	
+	
+	<input type="button" id="buyB" name="buyB" value="Buy Now" 
+		onclick="orderProduct();">
 	
 	<sec:authorize access="hasRole('ROLE_USER')">
 		<input type="hidden" id="id" value="<sec:authentication property="principal.id"/>">
 		<input type="button" id="wishB" name="wishB" value="Wish List">	
 	</sec:authorize>	
 
-	<input type="button" id="cartB" name="cartB" value="Add To Cart">
+	<input type="button" id="cartB" name="cartB" value="Add To Cart" onclick="addCart();">
 
 	
 	

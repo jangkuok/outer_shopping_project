@@ -7,10 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form id="loginForm" name="loginForm" action="${pageContext.request.contextPath}/login.do" method="post">
-		아이디 : <input type="text" id="id" name="id">
-		패스워드 : <input type="text" id="pw" name="pw">
+	<form id="loginForm" name="loginForm" action="${pageContext.request.contextPath}/loginForm.do" method="post">
+		아이디 : <input type="text" id="id" name="id"><br>
+		패스워드 : <input type="text" id="pw" name="pw"><br>
 		<input type="submit" id="login" name="login" value="로그인" onclick="loginCheck();" >
+		<input type="button" value="홈으로" onclick="location='${pageContext.request.contextPath}/.do'">
 	</form>
 </body>
 </html>

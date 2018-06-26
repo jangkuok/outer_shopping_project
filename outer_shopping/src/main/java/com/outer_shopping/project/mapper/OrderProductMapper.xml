@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.outer_shopping.project.mapper.OrderProductMapper">
+	<!-- 
+			order 테이블 관련 mapper
+			+ order 등록
+			+ order 삭제
+			+ order 조회
+	 -->
+	 
+	<sql id="all-column">
+	ORDER_NO, TOTAL_PRICE, HANDLING, MEMBER_ID, ADDRESS, PHONENUM, EMAIL, MESSAGE, ORDER_DATE
+	</sql> 
+	
+	<!-- ORDER_CHECK 전체 조회 sql -->
+	<sql id="select-orderCherk-sql">
+		SELECT 	ORDER_NO, TOTAL_PRICE, HANDLING, MEMBER_ID, ADDRESS, PHONENUM, EMAIL, MESSAGE, ORDER_DATE
+		FROM ORDER_CHECK
+	</sql>	 
+	
+	<!-- ORDER_PRODUCT 전체 조회 sql -->
+	<sql id="select-orderProduct-sql">
+		SELECT 	PRODUCT_NO, OUTER_NO, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_SIZE, PRODUCT_PRICE, ORDER_NO	
+		FROM ORDER_PRODUCT
+	</sql>	 	
+	
+	
+	<!-- ORDER_CHECK + ORDER_PRODUCT sql -->
+	<sql id="select-order-produck-sql">
+	SELECT		c.TOTAL_PRICE, c.HANDLING, 
+				c.MEMBER_ID, c.ADDRESS,
+				c.PHONENUM, c.EMAIL,
+				c.MESSAGE, c.ORDER_DATE,
+				p.PRODUCT_NO, p.OUTER_NO, p.PRODUCT_NAME, 
+				p.PRODUCT_COLOR, p.PRODUCT_SIZE, 
+				p.PRODUCT_PRICE, p.ORDER_NO			
+	FROM		ORDER_CHECK c, ORDER_PRODUCT p	
+	WHERE		c.ORDER_NO = p.ORDER_NO (+)
+	</sql>
+		
+	<!-- ORDER_CHECK resultMap -->
+	<resultMap id="orderCheck-resultmap" type="com.outer_shopping.project.vo.OrderCheckVo">
+		<id column="ORDER_NO" property="orderNo"/>
+		<result column="TOTAL_PRICE" property="totalPrice"/>
+		<result column="HANDLING" property="handing"/>
+		<result column="MEMBER_ID" property="memberId"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="PHONENUM" property="phoneNum"/>
+		<result column="EMAIL" property="email"/>
+		<result column="MESSAGE" property="message"/>
+		<result column="ORDER_DATE" property="orderDate"/>
+	</resultMap>
+	
+	
+	<!-- ORDER_PRODUCT resultMap -->
+	<resultMap id="orderProduct-resultmap" type="com.outer_shopping.project.vo.OrderProductVo">
+			<id column="PRODUCT_NO" property="productNo"/>
+			<result column="OUTER_NO" property="outerNo"/>
+			<result column="PRODUCT_NAME" property="productName"/>
+			<result column="PRODUCT_COLOR" property="productColor"/>
+			<result column="PRODUCT_SIZE" property="productSize"/>
+			<result column="PRODUCT_PRICE" property="productPrice"/>
+			<result column="ORDER_NO" property="orderNo"/>	
+	</resultMap>
+	
+	
+	
+	<!-- ORDER_CHECK + ORDER_PRODUCT resultMap -->
+	<resultMap type="com.outer_shopping.project.vo.OrderProductVo" 
+							id="orderCheck-orderProduct-resultmap" extends="orderCheck-resultmap" >
+		<collection property="productList" ofType="com.outer_shopping.project.vo.OrderCheckVo">
+			<id column="PRODUCT_NO" property="productNo"/>
+			<result column="OUTER_NO" property="outerNo"/>
+			<result column="PRODUCT_NAME" property="productName"/>
+			<result column="PRODUCT_COLOR" property="productColor"/>
+			<result column="PRODUCT_SIZE" property="productSize"/>
+			<result column="PRODUCT_PRICE" property="productPrice"/>
+			<result column="ORDER_NO" property="orderNo"/>	
+		</collection>
+	</resultMap>
+
+
+	
+	<!-- 주문 등록 SQL -->
+	<insert id="insertOrder" parameterType="com.outer_shopping.project.vo.OrderCheckVo">
+		<selectKey resultType="int" keyProperty="orderNo" order="BEFORE">
+			select ORDER_NO.nextval from dual 
+		</selectKey>
+		INSERT INTO ORDER_CHECK
+		VALUES(
+				#{orderNo},
+				#{totalPrice},
+				'결제 대기중',
+				#{memberId},
+				#{address},
+				#{phoneNum},
+				#{email},
+				#{message},
+				SYSDATE
+			   )
+	</insert>
+	
+	<!-- 상품 등록 SQL -->
+	<insert id="insertOrderProduct" parameterType="com.outer_shopping.project.vo.OrderProductVo">
+		<selectKey resultType="int" keyProperty="productNo" order="BEFORE">
+			select PRODUCT_NO.nextval from dual
+		</selectKey>
+		INSERT INTO ORDER_PRODUCT
+		VALUES(
+				#{productNo},
+				#{outerNo},
+				#{productName},
+				#{productColor},
+				#{productSize},
+				#{productPrice},
+				#{orderNo}
+			   )
+	</insert>
+	
+	<!-- 시퀀스 select -->
+	<select id="selectSequence" resultType="int">
+		select ORDER_NO.nextval from dual
+	</select>
+	
+
+	<!-- 주문 취소  SQL -->
+ 	<delete id="deleteOrder" parameterType="int">
+		DELETE FROM ORDER_CHECK WHERE ORDER_NO = #{orderNo}
+	</delete>
+
+	<!-- 자신의 주문 조회  SQL -->
+ 	<select id="selectMemberOrderList" parameterType="string" resultMap="orderCheck-resultmap">
+		<include refid="select-orderCherk-sql"/>
+		WHERE MEMBER_ID = #{memberId}
+	</select>	
+	
+	<!-- 해당 주문 상제 정보  SQL -->
+ 	<select id="selectOrderProductList" parameterType="int" resultMap="orderProduct-resultmap">
+		<include refid="select-orderProduct-sql"/>
+		WHERE ORDER_NO = #{orderNo}
+	</select>	
+	
+
+
+	<!-- 자신의 주문 조회 날짜  SQL -->
+ 	<select id="selectMemberOrderDateList" parameterType="string" resultMap="orderCheck-resultmap">
+		<include refid="select-orderCherk-sql"/>
+		WHERE MEMBER_ID = #{memberId}
+	</select>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////  -->
+<!-- admin -->
+
+	<!-- 전체 주문 조회 SQL -->
+ 	<select id="selectOrderList" resultMap="orderCheck-resultmap">
+		<include refid="select-orderCherk-sql"/>
+	</select>	
+	
+	
+	<!-- 상품 List 조회 SQL -->
+<!-- 	<select id="selectWishList" parameterType="string" resultMap="outer-wishList-resultmap">
+		<include refid="select-wishList-outer-sql"/>
+		AND w.MEMBER_ID = #{memberId}
+	</select> -->
+	
+	<!-- 상품 등록 중복확인 SQL -->
+<!-- 	<select id="selectWishListOverlapped" parameterType="hashmap" resultMap="wishList-resultmap">
+		<include refid="select-wishList-sql"/>
+		WHERE MEMBER_ID = #{memberId}
+		AND OUTER_NO = #{outerNo}
+	</select> -->
+
+
+</mapper>

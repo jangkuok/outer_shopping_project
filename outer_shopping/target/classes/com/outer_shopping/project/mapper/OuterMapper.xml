@@ -57,6 +57,7 @@
 		<result column="OUTER_DATE" property="insertDate"/>
 	</resultMap>
 	
+	
 	<!-- 아웃터 + 사이즈 resultMap -->
 	<resultMap type="com.outer_shopping.project.vo.OuterVo" id="outer-size-resultmap" extends="outer-resultmap" >
 		<collection property="sizeList" ofType="com.outer_shopping.project.vo.OuterSizeVo">

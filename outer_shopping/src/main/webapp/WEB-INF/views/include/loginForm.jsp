@@ -43,10 +43,10 @@ function logoutCheck(){
 </script>
 </head>
 <body>
-	<%
-		String mg = (String)request.getAttribute("msg");
-		System.out.println(mg);
-	%>
+<%
+	String mg = (String)request.getAttribute("msg");
+	System.out.println(mg);
+%>
 
 <!-- 비로그인일 경우 -->
 <sec:authorize access="!isAuthenticated()">
@@ -65,8 +65,10 @@ function logoutCheck(){
 </form>
 </sec:authorize>
 
+
 <!-- 회원 로그인 할 경우 -->
 <sec:authorize access="hasRole('ROLE_USER')">
+	<input type="hidden" id="id" value="<sec:authentication property="principal.id"/>">
 	<sec:authentication property="principal.id"/>님 환영합니다.        
 	<form id="logoutForm" name="logoutForm" action="${pageContext.request.contextPath}/logoutButton.do" method="post">
 		<input type="submit" id="logout" name="logout" value="로그아웃" onclick="logoutCheck();" >
@@ -76,6 +78,7 @@ function logoutCheck(){
 		<input type="submit" value="마이페이지">
 	</form>
 </sec:authorize>
+
 
 <!-- 관리자 로그인 할 경우 -->
 <sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -88,6 +91,9 @@ function logoutCheck(){
 	</form>	
 </sec:authorize>
 
+
+
+<!-- 전부다 보이는 버튼 -->
 <input type="button" value="장바구니" onclick="location='${pageContext.request.contextPath}/outer/cartPage.do'">
 <input type="button" value="홈으로" onclick="location='${pageContext.request.contextPath}/.do'">
 

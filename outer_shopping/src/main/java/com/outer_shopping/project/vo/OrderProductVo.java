@@ -2,40 +2,34 @@ package com.outer_shopping.project.vo;
 
 import java.io.Serializable;
 
-public class CartVo implements Serializable{
+public class OrderProductVo implements Serializable {
 	
-	private int cartNo;
 	private int productNo;
+	private int outerNo;
 	private String productName;
 	private String productColor;
 	private String productSize;
-	private String productPrice;
+	private int productPrice;
+	private int orderNo;
 	
-	public CartVo() {}
+	public OrderProductVo() {}
 
-	public CartVo(int cartNo, int productNo, String productName, String productColor, String productSize,
-			String productPrice) {
-		this.cartNo = cartNo;
+	public OrderProductVo(int productNo, int outerNo, String productName, String productColor, String productSize,
+			int productPrice, int orderNo) {
 		this.productNo = productNo;
+		this.outerNo = outerNo;
 		this.productName = productName;
 		this.productColor = productColor;
 		this.productSize = productSize;
 		this.productPrice = productPrice;
+		this.orderNo = orderNo;
 	}
 
 	@Override
 	public String toString() {
-		return "CartVo [cartNo=" + cartNo + ", productNo=" + productNo + ", productName=" + productName
+		return "OrderProductVo [productNo=" + productNo + ", outerNo=" + outerNo + ", productName=" + productName
 				+ ", productColor=" + productColor + ", productSize=" + productSize + ", productPrice=" + productPrice
-				+ "]";
-	}
-
-	public int getCartNo() {
-		return cartNo;
-	}
-
-	public void setCartNo(int cartNo) {
-		this.cartNo = cartNo;
+				+ ", orderNo=" + orderNo + "]";
 	}
 
 	public int getProductNo() {
@@ -44,6 +38,14 @@ public class CartVo implements Serializable{
 
 	public void setProductNo(int productNo) {
 		this.productNo = productNo;
+	}
+
+	public int getOuterNo() {
+		return outerNo;
+	}
+
+	public void setOuterNo(int outerNo) {
+		this.outerNo = outerNo;
 	}
 
 	public String getProductName() {
@@ -70,23 +72,32 @@ public class CartVo implements Serializable{
 		this.productSize = productSize;
 	}
 
-	public String getProductPrice() {
+	public int getProductPrice() {
 		return productPrice;
 	}
 
-	public void setProductPrice(String productPrice) {
+	public void setProductPrice(int productPrice) {
 		this.productPrice = productPrice;
+	}
+
+	public int getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(int orderNo) {
+		this.orderNo = orderNo;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + cartNo;
+		result = prime * result + orderNo;
+		result = prime * result + outerNo;
 		result = prime * result + ((productColor == null) ? 0 : productColor.hashCode());
 		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
 		result = prime * result + productNo;
-		result = prime * result + ((productPrice == null) ? 0 : productPrice.hashCode());
+		result = prime * result + productPrice;
 		result = prime * result + ((productSize == null) ? 0 : productSize.hashCode());
 		return result;
 	}
@@ -99,11 +110,14 @@ public class CartVo implements Serializable{
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof CartVo)) {
+		if (!(obj instanceof OrderProductVo)) {
 			return false;
 		}
-		CartVo other = (CartVo) obj;
-		if (cartNo != other.cartNo) {
+		OrderProductVo other = (OrderProductVo) obj;
+		if (orderNo != other.orderNo) {
+			return false;
+		}
+		if (outerNo != other.outerNo) {
 			return false;
 		}
 		if (productColor == null) {
@@ -123,11 +137,7 @@ public class CartVo implements Serializable{
 		if (productNo != other.productNo) {
 			return false;
 		}
-		if (productPrice == null) {
-			if (other.productPrice != null) {
-				return false;
-			}
-		} else if (!productPrice.equals(other.productPrice)) {
+		if (productPrice != other.productPrice) {
 			return false;
 		}
 		if (productSize == null) {
@@ -140,5 +150,5 @@ public class CartVo implements Serializable{
 		return true;
 	}
 
-	
+		
 }

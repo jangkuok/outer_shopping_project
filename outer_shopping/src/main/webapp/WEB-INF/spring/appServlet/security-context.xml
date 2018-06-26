@@ -17,7 +17,7 @@
 	<http auto-config="true" use-expressions="true">
 	
 		<!-- 로그인 페이지 -->
-		<form-login login-page="/include/loginForm.do"
+		<form-login login-page="/loginFormPage.do"
 					login-processing-url="/loginForm.do"
 					username-parameter="id"
 					password-parameter="pw"
