@@ -123,15 +123,18 @@
 	</select>
 	
 
-	<!-- 주문 취소  SQL -->
- 	<delete id="deleteOrder" parameterType="int">
-		DELETE FROM ORDER_CHECK WHERE ORDER_NO = #{orderNo}
-	</delete>
+	<!-- 주문 상태 수정 SQL -->
+	<update id="handingUpdateOrder" parameterType="hashmap">
+		UPDATE 	ORDER_CHECK 
+		SET		HANDLING = #{handing}
+		WHERE	ORDER_NO = #{orderNo}
+	</update>
 
 	<!-- 자신의 주문 조회  SQL -->
  	<select id="selectMemberOrderList" parameterType="string" resultMap="orderCheck-resultmap">
 		<include refid="select-orderCherk-sql"/>
 		WHERE MEMBER_ID = #{memberId}
+		ORDER BY ORDER_NO DESC
 	</select>	
 	
 	<!-- 해당 주문 상제 정보  SQL -->

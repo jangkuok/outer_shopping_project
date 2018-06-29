@@ -80,22 +80,16 @@ public class OrderController {
 		List<ProductVo> list = new ArrayList<>();
 		
 		System.out.println(productList);
-		
-		//세션에 상품이 없을 경우
+	
 		for(int i = 0; i< productList.size(); i++) {			
 			
 			ProductVo cart = new ProductVo();
 			
-			cart.setCartNo(i);
-			i++;
-			cart.setProductNo(Integer.parseInt(productList.get(i).toString()));
-			i++;
-			cart.setProductName(productList.get(i).toString());
-			i++;
-			cart.setProductColor(productList.get(i).toString());
-			i++;
-			cart.setProductSize(productList.get(i).toString());
-			i++;
+			cart.setCartNo(Integer.parseInt(productList.get(i).toString()));		i++;
+			cart.setProductNo(Integer.parseInt(productList.get(i).toString())); 	i++;
+			cart.setProductName(productList.get(i).toString());						i++;
+			cart.setProductColor(productList.get(i).toString());					i++;
+			cart.setProductSize(productList.get(i).toString());						i++;
 			cart.setProductPrice(productList.get(i).toString());
 			
 			list.add(cart);

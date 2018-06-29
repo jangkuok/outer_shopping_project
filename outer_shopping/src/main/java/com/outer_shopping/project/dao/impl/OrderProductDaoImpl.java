@@ -1,7 +1,9 @@
 package com.outer_shopping.project.dao.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,14 +59,19 @@ public class OrderProductDaoImpl implements OrderProductDao {
 	}
 
 	/**
-	 * 주문 취소
+	 * 주문 상태 수정
 	 */
 	@Override
-	public void deleteOrder(int orderId) {
+	public void handingUpdateOrder(int orderNo, String handing) {
 		try {
-			session.delete(makeSqlId("deleteOrder"), orderId);
+			
+			Map<String, Object> input = new HashMap<String, Object>();
+			input.put("orderNo",orderNo);
+			input.put("handing",handing);
+			
+			session.update(makeSqlId("handingUpdateOrder"), input);
 		}catch (Exception e) {
-			System.out.println("deleteOrder(dao) : ");
+			System.out.println("handingUpdateOrder(dao) : ");
 			e.printStackTrace();
 		}	
 		

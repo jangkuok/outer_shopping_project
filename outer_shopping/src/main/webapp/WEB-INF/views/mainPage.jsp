@@ -12,11 +12,26 @@
 <body>
 <jsp:include page="include/loginForm.jsp" flush="false"/><br>
 	<c:if test="${not empty list}">
-		<c:forEach var="outer" items="${list}" varStatus="st">
-			<a href="${pageContext.request.contextPath}/outer/outerView.do?outerNo=${outer.outerNo}">
-				${outer.name}
-			</a> / ${outer.price}
-		</c:forEach>
+			<table border="1">
+			<thead>
+			<tr>
+				<th>상품이름</th>
+				<th>가격</th>
+			</tr>
+			</thead>
+			<tbody>
+			<c:forEach var="outer" items="${list}" varStatus="st">
+				<tr>
+					<td>
+						<a href="${pageContext.request.contextPath}/outer/outerView.do?outerNo=${outer.outerNo}">
+							${outer.name}
+						</a>
+					</td>
+					<td>${outer.price}</td>
+				</tr>
+			</c:forEach>
+			</tbody>
+		</table>
 	</c:if>
 </body>
 </html>

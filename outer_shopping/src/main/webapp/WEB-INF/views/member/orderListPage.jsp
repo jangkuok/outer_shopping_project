@@ -15,8 +15,8 @@
 
 <!-- bootstrap JS : 3.3.7 -->
 <script src="<c:url value='/js/bootstrap/3.3.7/js/bootstrap.min.js' />"></script>
-
-
+<!-- form -->
+<script src="http://cdn.rawgit.com/jmnote/jquery.nonajaxform/33a7/jquery.nonajaxform.min.js"></script>
 <script type="text/javascript">
 //상품 선택하기
 $(document).ready(function() {
@@ -24,9 +24,9 @@ $(document).ready(function() {
 	 
 	
 	 
-    $("input[id^=productList_]").click(function (e) {
+    $("input[id^=orderProductList_]").click(function (e) {
        
-        var orderNo = e.target.id.substring(12); 
+        var orderNo = e.target.id.substring(17); 
          
         $.ajax ({
             "url" : "${pageContext.request.contextPath}/member/productListSearch.do",
@@ -35,24 +35,54 @@ $(document).ready(function() {
             "dataType":"json",
             "success" : function (data) {
             	 $.each(data,function(index,item){
-            		 var product = '<li name="productList">'+
-            			'<input type="hidden" value="'+ item.outerNo +'" readonly="">'+
-            			'<input type="text" value="'+ item.productName +'" readonly="">'+
-            			'<input type="text" value="'+ item.productSize +'" readonly="">'+
-            			'<input type="text" value="'+ item.productColor +'" readonly="">'+
-            			'<input type="text" value="'+ item.productPrice +'" readonly="">'+
-            			'</li>';            			
-            		 $('ul#selectProduct').append(product);
+            		 var product = '<tr id="modalTr"><td>'+ item.outerNo + '</td>'+
+            		 '<td>'+ item.productName + '</td>'+
+            		 '<td>'+ item.productSize + '</td>'+
+            		 '<td>'+ item.productColor + '</td>'+
+            		 '<td>'+ item.productPrice + '</td></tr>'
+            		 
+            		 $('tbody#modalTbody').append(product);
             	 });
             }                  
         });
         
-        $('input[id^=productList_').on('click',function(){
-        	$('li[name="productList"]').remove();
+        $('input[id^=orderProductList_]').on('click',function(){
+        	$('tr#modalTr').remove();
         });
-       
     });
 });
+//결제하기
+function payment(i){
+	$(document).ready(function() {
+     	if(confirm('결제를 하시겠습니까?')) { 
+    		$.form({
+				"action": "${pageContext.request.contextPath}/member/haningUpdateOrder.do",
+				"type":"POST",
+				"data": {"orderNo" : i, "handing" : $('#paymentHanding').val(), "memberId" : $('#id').val()},
+				"dataType":"text"
+			}).submit();
+	    }else { 
+	    	return;
+	    }
+	});
+}
+
+
+//주문취소
+function handingOrder(i){
+	$(document).ready(function() {
+     	if(confirm('주문을 취소 하시겠습니까?')) { 
+    		$.form({
+				"action": "${pageContext.request.contextPath}/member/haningUpdateOrder.do",
+				"type":"POST",
+				"data": {"orderNo" : i, "handing" : $('#handing').val(), "memberId" : $('#id').val()},
+				"dataType":"text"
+			}).submit();
+	    }else { 
+	    	return;
+	    }
+	});
+}
 </script>
 </head>
 <body>
@@ -66,11 +96,21 @@ $(document).ready(function() {
           </div>
          
           <div id="article_content" class="modal-body">
-          		<ul id = "selectProduct">
-		
-				</ul>
+	          <table border="1">
+				<thead>
+				<tr>
+					<th>상품번호</th>
+					<th>상품이름</th>
+					<th>사이즈</th>
+					<th>색상</th>
+					<th>가격</th>
+				</tr>
+				</thead>
+				<tbody id="modalTbody">
+
+				</tbody>
+			</table>
           </div>
-         
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
@@ -85,25 +125,72 @@ $(document).ready(function() {
 		</div>
 	</c:if>
 	
-	<c:if test="${not empty list}">
-	<div id ="checkList">
-		<c:forEach var="orderList" items="${list}" varStatus="st">
+	<c:if test="${not empty list}">		
+		<table border="1">
+			<thead>
+			<tr>
+				<th>주문번호</th>
+				<th>입금액</th>
+				<th>주문날짜</th>
+				<th>진행상황</th>
+				<th>상세보기</th>
+				<th>주문관리</th>
+				<th>결제하기</th>
+			</tr>
+			</thead>
+			<tbody>
+			<c:forEach var="orderList" items="${list}" varStatus="st">
+				<tr>
+					<td>${orderList.orderNo}</td>
+					<td>${orderList.totalPrice}</td>
+					<td>${orderList.orderDate}</td>
+					<td>${orderList.handing}</td>
+					<td>
+						<c:if test="${orderList.handing != '주문취소'}">
+							<input type="button" id="orderProductList_${orderList.orderNo}" data-toggle="modal" data-target="#myModal" value="상세보기" >
+						</c:if>
+					</td>
+					<td>
+						<c:if test="${orderList.handing != '배송완료'}">
+							<input type="hidden" id="handing" value="주문취소">
+							<input type="button" id="hangingOrderB_${orderList.orderNo}" value="주문취소" onclick="handingOrder(${orderList.orderNo})">
+						</c:if>
+					</td>
+					<td>
+						<c:if test="${orderList.handing == '결제 대기중'}">
+								<input type="hidden" id="paymentHanding" value="배송대기중">
+								<input type="button" id="paymentB_${orderList.orderNo}" value="결제하기" onclick="payment(${orderList.orderNo})">
+						</c:if>
+					</td>
+				</tr>
+			</c:forEach>
+			</tbody>
+		</table>
+	</c:if>
+	
+	
+	
+	
+	
+	
+	<%-- 	<c:forEach var="orderList" items="${list}" varStatus="st">
 			<div>
 				<div id="">
-					<input type="checkBox" id="check" name="checkBox" value="">
 						주문번호 : ${orderList.orderNo } /
 						입금액 : ${orderList.totalPrice } / 
 						주문날짜 : ${orderList.orderDate } / 
 						진행상황 : ${orderList.handing }
 						<input type="hidden" id="orderNo_${orderList.orderNo}" name="orderNo" value="${orderList.orderNo}">
-						<%-- <button id="productList_${orderList.orderNo}" data-toggle="modal" data-target="#myModal">상세보기</button> --%>
-						<input type="button"  id="productList_${orderList.orderNo}" data-toggle="modal" data-target="#myModal" value="상세보기" >
-						<input type="button" id="" name="" value="주문취소">
+						<form id="cancel_${orderList.orderNo}" action="${pageContext.request.contextPath}/member/cancelOrder.do" method="post">
+							<input type="hidden" id="memberId" value="${orderList.memberId}">
+							<input type="button" value="주문취소" onclick="cancelOrderButton(${orderList.orderNo});">
+						</form>	
+						<input type="button"  id="orderProductList_${orderList.orderNo}" data-toggle="modal" data-target="#myModal" value="상세보기" >
+
 				</div>
 			</div>
 		</c:forEach>
-	</div>
 	</c:if>
-
+ --%>
 </body>
 </html>

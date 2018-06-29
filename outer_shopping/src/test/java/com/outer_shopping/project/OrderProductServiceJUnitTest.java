@@ -91,7 +91,7 @@ public class OrderProductServiceJUnitTest {
 	public void deleteTest(){
 		log.info("######### JUnit(deleteTest) 테스트 ##############");
 	
-		service.removeOrder(74);
+		service.handingUpdateOrder(74,"입금완료");
 	}
 	
 	@Test

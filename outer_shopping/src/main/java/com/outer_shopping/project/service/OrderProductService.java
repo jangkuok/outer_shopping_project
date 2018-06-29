@@ -19,7 +19,7 @@ public interface OrderProductService {
 	 * 주문 취소
 	 * @param orderId
 	 */
-	void removeOrder(int orderId);
+	void handingUpdateOrder(int orderNo, String handing);
 	
 	/**
 	 * 해당 회원 주문 목록

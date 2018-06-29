@@ -49,11 +49,11 @@ public class OrderProductServiceImpl implements OrderProductService {
 
 	
 	@Override
-	public void removeOrder(int orderId) {
+	public void handingUpdateOrder(int orderNo, String handing) {
 		try {
-			dao.deleteOrder(orderId);
+			dao.handingUpdateOrder(orderNo,handing);
 		}catch (Exception e) {
-			System.out.println("removeOrder(service) : ");
+			System.out.println("handingUpdateOrder(service) : ");
 			e.printStackTrace();
 		}	
 	}

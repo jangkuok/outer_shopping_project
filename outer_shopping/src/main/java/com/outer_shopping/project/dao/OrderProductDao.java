@@ -26,10 +26,10 @@ public interface OrderProductDao {
 	int selectSeq();
 	
 	/**
-	 * 주문 취소
-	 * @param orderId
+	 * 주문 상태 수정
+	 * @param orderNo
 	 */
-	void deleteOrder(int orderId);
+	void handingUpdateOrder(int orderNo,String handing);
 	
 	/**
 	 * 해당 회원 주문 목록

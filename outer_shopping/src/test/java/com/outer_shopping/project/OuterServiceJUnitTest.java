@@ -1,7 +1,9 @@
 package com.outer_shopping.project;
 
 import java.sql.Date;
-import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,10 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.outer_shopping.project.service.ColorService;
 import com.outer_shopping.project.service.OuterService;
 import com.outer_shopping.project.service.OuterSizeService;
-import com.outer_shopping.project.vo.ColorVo;
 import com.outer_shopping.project.vo.OuterSizeVo;
 import com.outer_shopping.project.vo.OuterVo;
 
@@ -104,8 +104,9 @@ public class OuterServiceJUnitTest {
 		//service.getOuter(outerNo);
 		
 		
-		sizeService.getListOuterSizeColor(outerNo,sizeType);
+		//sizeService.getListOuterSizeColor(outerNo,sizeType);
 		
+
 		
  	} 
 

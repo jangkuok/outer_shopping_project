@@ -15,12 +15,9 @@ $(document).ready(function() {
 	var price = 0;
 	
 	//상품금액
-	$('input[name="cartNo"]').each(function(){
-		var no = $(this).val();  
-		var sum = $('#productPrice'+no).val();
-	
-		price = parseInt(price) + parseInt(sum);
-
+	$('td[name="tdPrice"]').each(function(){
+		var no = $(this).text();  
+		price = parseInt(no);
 		//상품가격
 		$("input[name='productPrice']").val(price);
 	});
@@ -168,14 +165,56 @@ function getPostcodeAddress() {
     }).open();
 }
 </script> 
-
+<style>
+.textTrans{
+	background-color:transparent;
+	border:0 solid black;
+	text-align:right;
+}
+</style>
    
 </head>
 <body>
 <jsp:include page="../include/loginForm.jsp" flush="false"/><br>
 주문내역
 	<div>
+		<table border="1" width="70%">
+			<thead>
+			<tr>
+				<th></th>
+				<th>번호</th>
+				<th>상품 번호</th>
+				<th>상품 이름</th>
+				<th>색상</th>
+				<th>사이즈</th>
+				<th>가격</th>
+			</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="orderList" items="${orderList}" varStatus="st">
+					<tr>
+						<td>
+							<input type="checkBox" id="checkBox" name="checkBox">
+						</td>
+						<td>${orderList.cartNo}</td>
+						<td>${orderList.productNo}</td>
+						<td>${orderList.productName}</td>
+						<td>${orderList.productColor}</td>
+						<td>${orderList.productSize}</td>
+						<td name="tdPrice">${orderList.productPrice}</td>
+					</tr>
+				</c:forEach>
+				<tr>
+						<td colspan="7" >
+							상품금액<input class="textTrans" type="text" id="productPrice" name="productPrice" size="6" value="0"> +
+							배송비<input class="textTrans" type="text" id="deliveryPrice" name="deliveryPrice" size="6" value="0"> = 
+							합계 : <input class="textTrans" type="text" id="totalPrice1" name="totalPrice" size="8" value="0"><br>
+						</td>
+				</tr>
+			</tbody>
+		</table>
 	
+<%-- 	
 		<c:forEach var="orderList" items="${orderList}" varStatus="st">
 			<div>
 					<div id ="checkProduct${orderList.cartNo}" name="checkProduct">
@@ -188,39 +227,99 @@ function getPostcodeAddress() {
 						<input type="text" id="productPrice${orderList.cartNo}" name="product" value="${orderList.productPrice}">
 					</div>
 			</div>
-		</c:forEach>
+		</c:forEach> 
+--%>
 	</div>
-상품금액<input type="text" id="productPrice" name="productPrice" value="0"> + 
-배송비<input type="text" id="deliveryPrice" name="deliveryPrice" value="0"> = 
-합계 : <input type="text" id="totalPrice1" name="totalPrice" value="0"><br>
 <input type="button" id="removeProduct" name="removeProduct" value="상품삭제">
 <hr>	
-주문정보<br>
-	&nbsp;&nbsp;주문자 		:	<input type="text" id="" name="" value="${memberVo.name}"><br>
-	&nbsp;&nbsp;주소		:	<input type="text" id="" name="" value="${memberVo.zipcode}"><br>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="text" id="" name="" value="${memberVo.address}">
-								<input type="text" id="" name="" value="${memberVo.address2}"><br>
-	&nbsp;&nbsp;휴대전화	:	<input type="text" id="" name="" value="${memberVo.phoneNum}"><br>
-	&nbsp;&nbsp;이메일		:	<input type="text" id="" name="" value="${memberVo.email}"><br>
-
+	<div>
+		주문정보
+		<table border="1" width="70%">
+			<tr>
+				<th width="20%">주문자*</th>
+				<td width="80%">
+					<input type="text" id="" name="" value="${memberVo.name}">
+				</td>
+			</tr>
+			<tr>
+				<th>주소*</th>
+				<td>
+					<input type="text" id="" name="" value="${memberVo.zipcode}" size="4"><br>
+					<input type="text" id="" name="" value="${memberVo.address}" size="70">  기본주소<br>
+					<input type="text" id="" name="" value="${memberVo.address2}" size="70"> 나머지주소
+				</td>
+			</tr>
+			<tr>
+				<th>휴대전화*</th>
+				<td>
+					<input type="text" id="" name="" value="${memberVo.phoneNum}">
+				</td>
+			</tr>
+			<tr>
+				<th>이메일*</th>
+				<td>
+					<input type="text" id="" name="" value="${memberVo.email}">
+				</td>
+			</tr>
+		</table>
+	</div>
 <hr>	
-배송정보<br>
-	<input type="hidden" id="orderNo" name="orderNo" value="${orderNo}">
-	&nbsp;&nbsp;배송지 선택 : 	<input type="radio" id="existSelect" name="orderCheck" checked="checked" value="주문자" /> 주문자 정보와 동일
-  								<input type="radio" id="newSelect" name="orderCheck" value="새로운" /> 새로운 배송지<br>
-	&nbsp;&nbsp;주문자 		:	<input type="text" id="name" name="name" value="${memberVo.name}">
-	&nbsp;&nbsp;주소		:	<input type="text" id="zipcode" name="deliveryInfo" value="${memberVo.zipcode}">
-								<input type="button" value="주소 검색" onClick="getPostcodeAddress()"><br>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="text" id="address" name="deliveryInfo" value="${memberVo.address}">
-								<input type="text" id="address2" name="deliveryInfo" value="${memberVo.address2}"><br>
-	&nbsp;&nbsp;휴대전화	:	<input type="text" id="phoneNum" name="deliveryInfo" value="${memberVo.phoneNum}"><br>
-	&nbsp;&nbsp;이메일		:	<input type="text" id="email" name="deliveryInfo" value="${memberVo.email}"><br>
-	&nbsp;&nbsp;배송메세지	:	<br>&nbsp;&nbsp;&nbsp;
-								<textarea id="message"></textarea><br>
-결제 예정 금액<br>
-&nbsp;&nbsp;<input type="text" id="totalPrice2" name="deliveryInfo" value="0"><br>
+	<div>
+		배송정보
+		<input type="hidden" id="orderNo" name="orderNo" value="${orderNo}">
+		<table border="1" width="70%">
+			<tr>
+				<th width="20%">배송지 선택</th>
+				<td width="80%">
+					<input type="radio" id="existSelect" name="orderCheck" checked="checked" value="주문자" /> 주문자 정보와 동일
+					<input type="radio" id="newSelect" name="orderCheck" value="새로운" /> 새로운 배송지
+				</td>
+			</tr>
+			<tr>
+				<th>주문자*</th>
+				<td>
+					<input type="text" id="name" name="name" value="${memberVo.name}">
+				</td>
+			</tr>
+			<tr>
+				<th>주소*</th>
+				<td>
+					<input type="text" id="zipcode" name="deliveryInfo" value="${memberVo.zipcode}" size="40">
+					<input type="button" value="주소 검색" onClick="getPostcodeAddress()"><br>
+					<input type="text" id="address" name="deliveryInfo" value="${memberVo.address}" size="70"> 기본주소<br>
+					<input type="text" id="address2" name="deliveryInfo" value="${memberVo.address2}" size="70"> 나머지주소
+				</td>
+			</tr>
+			<tr>
+				<th>휴대전화*</th>
+				<td>
+					<input type="text" id="phoneNum" name="deliveryInfo" value="${memberVo.phoneNum}">
+				</td>
+			</tr>
+			<tr>
+				<th>이메일*</th>
+				<td>
+					<input type="text" id="email" name="deliveryInfo" value="${memberVo.email}">
+				</td>
+			</tr>
+			<tr>
+				<th>배송메세지</th>
+				<td>
+					<textarea id="message"></textarea>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div>
+			<table border="1" width="50%">
+			<tr>
+				<th>결제 예정 금액</th>
+				<td>
+					<input class="textTrans" type="text" id="totalPrice2" name="deliveryInfo" value="0">
+				</td>
+			</tr>
+		</table>
+	</div>
 <hr>	
 결제 수단<br>
 <input type="radio" name="" value="" /> 카드 결제

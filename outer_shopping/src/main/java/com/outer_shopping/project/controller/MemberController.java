@@ -197,7 +197,7 @@ public class MemberController {
 	/**
 	 * 주문목록 조회
 	 */
-	@RequestMapping(value = "/orderListSearch.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/orderListSearch.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public String orderListSearch(Model model,@RequestParam(value="id",required=false) String memberId) {
 		
 		List<OrderCheckVo> list = orderService.getMemberOrderList(memberId);
@@ -221,4 +221,22 @@ public class MemberController {
 		return list;
 	}	
 	
+	
+	/**
+	 * 주문 상태 수정
+	 */
+	@RequestMapping(value = "/haningUpdateOrder.do", method = RequestMethod.POST)
+	public String haningUpdateOrder(Model model,@RequestParam(value="orderNo",required=false) int orderNo,
+			@RequestParam(value="handing",required=false) String handing,
+			@RequestParam(value="memberId",required=false) String memberId) {
+		
+		orderService.handingUpdateOrder(orderNo,handing);
+		
+		List<OrderCheckVo> list = orderService.getMemberOrderList(memberId);
+		
+		model.addAttribute("list", list);
+		
+		logger.info("############# 주문 취소 #############");
+		return "member/orderListPage";
+	}
 }

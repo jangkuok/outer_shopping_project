@@ -185,7 +185,7 @@ function addCart(){
 			$.form({
 				"action": "${pageContext.request.contextPath}/outer/addCart.do",
 				"type":"GET",
-				"data": {"productList" : productArr},
+				"data": {"productList" : productArr, "outerNo" : $('#outerNo').val()},
 				"dataType":"text"
 			}).submit();	
 		});
@@ -269,7 +269,6 @@ function orderProduct(){
 		onclick="orderProduct();">
 	
 	<sec:authorize access="hasRole('ROLE_USER')">
-		<input type="hidden" id="id" value="<sec:authentication property="principal.id"/>">
 		<input type="button" id="wishB" name="wishB" value="Wish List">	
 	</sec:authorize>	
 
