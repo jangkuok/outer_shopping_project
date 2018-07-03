@@ -13,24 +13,27 @@
 <jsp:include page="include/loginForm.jsp" flush="false"/><br>
 	<c:if test="${not empty list}">
 			<table border="1">
-			<thead>
-			<tr>
-				<th>상품이름</th>
-				<th>가격</th>
-			</tr>
-			</thead>
-			<tbody>
 			<c:forEach var="outer" items="${list}" varStatus="st">
+				<tr>
+					<td>
+						<a href="${pageContext.request.contextPath}/outer/outerView.do?outerNo=${outer.outerNo}">
+							<img src="<c:url value='/image/${outer.imageName}'/>" width="200" height="200"/>
+						</a>
+						
+					</td>
+				</tr>
 				<tr>
 					<td>
 						<a href="${pageContext.request.contextPath}/outer/outerView.do?outerNo=${outer.outerNo}">
 							${outer.name}
 						</a>
 					</td>
-					<td>${outer.price}</td>
+					
+				</tr>
+				<tr>
+					<td>${outer.price} won</td>
 				</tr>
 			</c:forEach>
-			</tbody>
 		</table>
 	</c:if>
 </body>

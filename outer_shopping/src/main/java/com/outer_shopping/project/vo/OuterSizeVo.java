@@ -16,7 +16,7 @@ public class OuterSizeVo implements Serializable {
 	private int sizeNo; 	//사이즈 번호
 	
 	@NotNull
-	private String type;		//사이즈 타입
+	private String type;	//사이즈 타입
 	
 	@NotNull
 	private int chest;		//가슴

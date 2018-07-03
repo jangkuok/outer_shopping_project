@@ -58,8 +58,7 @@
   	<session-config>
    		<session-timeout>10</session-timeout>
 	</session-config>
-  	
-  	
+    
    	<!-- Security Filter -->
 	<filter>
 	  <filter-name>springSecurityFilterChain</filter-name>

@@ -209,7 +209,7 @@ public class MemberController {
 	}	
 	
 	/**
-	 * 주문목록 조회
+	 * 주문상세상품 조회
 	 */
 	@RequestMapping(value = "/productListSearch.do", method = RequestMethod.POST)
 	@ResponseBody
@@ -218,6 +218,7 @@ public class MemberController {
 		List<OrderProductVo> list = orderService.getOrderProductList(orderNo);
 	
 		logger.info("############# 주문상품 상세 modal #############");
+		
 		return list;
 	}	
 	

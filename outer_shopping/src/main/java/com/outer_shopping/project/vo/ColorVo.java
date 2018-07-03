@@ -16,30 +16,30 @@ public class ColorVo implements Serializable{
 	@NotNull
 	private String colorType;
 	@NotNull
-	private int sizeNO;
+	private int sizeNo;
 	
 	private OuterSizeVo outerSize;
 	
 	private ColorVo() {}
 	
 
-	public ColorVo(int colorNo, String colorType, int sizeNO) {
+	public ColorVo(int colorNo, String colorType, int sizeNo) {
 		this.colorNo = colorNo;
 		this.colorType = colorType;
-		this.sizeNO = sizeNO;
+		this.sizeNo = sizeNo;
 	}
 
-	public ColorVo(int colorNo, String colorType, int sizeNO, OuterSizeVo outerSize) {
+	public ColorVo(int colorNo, String colorType, int sizeNo, OuterSizeVo outerSize) {
 		this.colorNo = colorNo;
 		this.colorType = colorType;
-		this.sizeNO = sizeNO;
+		this.sizeNo = sizeNo;
 		this.outerSize = outerSize;
 	}
 
 
 	@Override
 	public String toString() {
-		return "OuterColorVo [colorNo=" + colorNo + ", colorType=" + colorType + ", sizeNO=" + sizeNO + ", outerSize="
+		return "OuterColorVo [colorNo=" + colorNo + ", colorType=" + colorType + ", sizeNo=" + sizeNo + ", outerSize="
 				+ outerSize + "]";
 	}
 
@@ -64,13 +64,13 @@ public class ColorVo implements Serializable{
 	}
 
 
-	public int getSizeNO() {
-		return sizeNO;
+	public int getsizeNo() {
+		return sizeNo;
 	}
 
 
-	public void setSizeNO(int sizeNO) {
-		this.sizeNO = sizeNO;
+	public void setsizeNo(int sizeNo) {
+		this.sizeNo = sizeNo;
 	}
 
 
@@ -91,7 +91,7 @@ public class ColorVo implements Serializable{
 		result = prime * result + colorNo;
 		result = prime * result + ((colorType == null) ? 0 : colorType.hashCode());
 		result = prime * result + ((outerSize == null) ? 0 : outerSize.hashCode());
-		result = prime * result + sizeNO;
+		result = prime * result + sizeNo;
 		return result;
 	}
 
@@ -125,7 +125,7 @@ public class ColorVo implements Serializable{
 		} else if (!outerSize.equals(other.outerSize)) {
 			return false;
 		}
-		if (sizeNO != other.sizeNO) {
+		if (sizeNo != other.sizeNo) {
 			return false;
 		}
 		return true;

@@ -40,24 +40,20 @@ public class OrderController {
 
 		List<ProductVo> list = new ArrayList<>();
 		
-		System.out.println(productList);
+		int no = 1;
 		
 		//세션에 상품이 없을 경우
 		for(int i = 0; i< productList.size(); i++) {			
 			
 			ProductVo cart = new ProductVo();
 			
-			cart.setCartNo(i);
-			cart.setProductNo(Integer.parseInt(productList.get(i).toString()));
-			i++;
-			cart.setProductName(productList.get(i).toString());
-			i++;
-			cart.setProductColor(productList.get(i).toString());
-			i++;
-			cart.setProductSize(productList.get(i).toString());
-			i++;
-			cart.setProductPrice(productList.get(i).toString());
-			i++;
+			cart.setCartNo(no);
+			cart.setProductNo(Integer.parseInt(productList.get(i).toString()));		i++;
+			cart.setProductName(productList.get(i).toString());						i++;
+			cart.setProductColor(productList.get(i).toString());					i++;
+			cart.setProductSize(productList.get(i).toString());						i++;
+			cart.setProductPrice(productList.get(i).toString());					i++;
+			no++;
 			
 			list.add(cart);
 		}	
@@ -132,15 +128,16 @@ public class OrderController {
 		//주문에 관한 상품 등록
 		List<OrderProductVo> list = new ArrayList<>();
 		
-		for (int i = 0; i < productList.size(); i++) {
+		for (int i = 1; i < productList.size(); i++) {
 			
+			System.out.println(i);
 			OrderProductVo product = new OrderProductVo();
 			
 			product.setOuterNo(Integer.parseInt(productList.get(i))); i++;
 			product.setProductName(productList.get(i)); i++;
 			product.setProductColor(productList.get(i)); i++;
 			product.setProductSize(productList.get(i)); i++;
-			product.setProductPrice(Integer.parseInt(productList.get(i)));
+			product.setProductPrice(Integer.parseInt(productList.get(i)));i++;
 			product.setOrderNo(orderNo);
 			
 			list.add(product);

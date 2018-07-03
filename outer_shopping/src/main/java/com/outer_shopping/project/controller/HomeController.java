@@ -39,6 +39,8 @@ public class HomeController {
 	
 		List<OuterVo> list = outerService.findOuterList();
 		
+		
+		System.out.println(list);
 		model.addAttribute("list",list);
 		
 		logger.info("############# 메인페이지 이동 #############");

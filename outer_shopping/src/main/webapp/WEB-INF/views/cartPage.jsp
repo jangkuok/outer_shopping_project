@@ -41,20 +41,10 @@ $(document).ready(function() {
 			    rowData.push(tr.text());
 			    
 			    var cartNo = td.eq(1).text();
-		        //var productNo = td.eq(2).text();
-		        //var productName = td.eq(3).text();
-		        //var productColor = td.eq(4).text();
-		        //var productSize = td.eq(5).text();
-		        //var productPrice = td.eq(6).text();
-		        
+
 		        checkArr.push(cartNo);
-		        //checkArr.push(productNo);
-		        //checkArr.push(productName);
-		        //checkArr.push(productColor);
-		        //checkArr.push(productSize);
-		        //checkArr.push(productPrice);
 		    });
-	alert(checkArr);
+
  			$.ajax
 			({		
 				"url":"${pageContext.request.contextPath}/outer/deleteCart.do", 
@@ -112,6 +102,7 @@ function orderProduct(){
 		        checkArr.push(productSize);
 		        checkArr.push(productPrice);
 			});	
+			
 			$.form({
 				"action": "${pageContext.request.contextPath}/member/orderPages.do",
 				"type":"POST",
@@ -128,7 +119,6 @@ function orderProduct(){
 <jsp:include page="include/loginForm.jsp" flush="false"/><br>
 <input type="hidden" id="count" name="count" value="${sessionScope.size()}">
 <c:if test="${not empty sessionScope.cart}">
-	<c:forEach var="cartList" items="${sessionScope.cart}" varStatus="st">
 		<table border="1" width="50%">
 			<thead>
 			<tr>
@@ -142,20 +132,22 @@ function orderProduct(){
 			</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>
-						<input type="checkBox" id="checkBox" name="checkBox">
-					</td>
-					<td>${cartList.cartNo}</td>
-					<td>${cartList.productNo}</td>
-					<td>${cartList.productName}</td>
-					<td>${cartList.productColor}</td>
-					<td>${cartList.productSize}</td>
-					<td>${cartList.productPrice}</td>
-				</tr>
+				<c:forEach var="cartList" items="${sessionScope.cart}" varStatus="st">
+					<tr>
+						<td>
+							<input type="checkBox" id="checkBox" name="checkBox">
+						</td>
+						<td>${cartList.cartNo}</td>
+						<td>${cartList.productNo}</td>
+						<td>${cartList.productName}</td>
+						<td>${cartList.productColor}</td>
+						<td>${cartList.productSize}</td>
+						<td>${cartList.productPrice}</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
-		</c:forEach>
+		
 </c:if>
 	<input type="button" id="removeCart" name="removeCart" value="상품삭제">
 	<input type="button" id="buyB" name="buyB" value="상품주문" onclick="orderProduct();">

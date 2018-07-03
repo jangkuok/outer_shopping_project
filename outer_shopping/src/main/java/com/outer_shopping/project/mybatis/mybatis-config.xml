@@ -17,5 +17,6 @@
 		<mapper resource="com/outer_shopping/project/mapper/OuterSizeMapper.xml"/>
 		<mapper resource="com/outer_shopping/project/mapper/ColorMapper.xml"/>
 		<mapper resource="com/outer_shopping/project/mapper/OrderProductMapper.xml"/>
+		<mapper resource="com/outer_shopping/project/mapper/OuterPictureMapper.xml"/>
 	</mappers>
 </configuration>

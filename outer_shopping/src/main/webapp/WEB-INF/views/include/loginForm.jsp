@@ -86,7 +86,7 @@ function logoutCheck(){
 	<form id="logoutForm" name="logoutForm" action="${pageContext.request.contextPath}/logoutButton.do" method="post">
 		<input type="submit" id="logout" name="logout" value="로그아웃" onclick="logoutCheck();" >
 	</form>
-	<form id="outerForm" name="outerForm" action="${pageContext.request.contextPath}/admin/outerForm.do" method="post">
+	<form id="outerForm" name="outerForm" action="${pageContext.request.contextPath}/admin/outerForm.do" method="get">
 		<input type="submit" value="물품등록">
 	</form>	
 </sec:authorize>

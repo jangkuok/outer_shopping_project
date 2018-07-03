@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.outer_shopping.project.mapper.OuterPictureMapper">
+	<!-- 
+			OuterImage 테이블 관련 mapper
+			+ OuterImage 등록
+			+ OuterImage 수정
+			+ OuterImage 삭제
+			+ OuterImage 조회
+	 -->
+	 
+	<sql id="all-column">
+		PICTURE_NO, PICTURE_NAME, PICTURE_URL, OUTER_NO
+	</sql> 
+	
+	<!-- 전체 조회 sql -->
+	<sql id="select-Outer-sql">
+		SELECT 	PICTURE_NO, PICTURE_NAME, PICTURE_URL, OUTER_NO
+		FROM OUTER_PICTURE
+	</sql>	 
+	
+	<!-- 아웃터 resultMap -->
+	<resultMap id="outerPicture-resultmap" type="com.outer_shopping.project.vo.OuterPictureVo">
+		<id column="PICTURE_NO" property="prictureNo"/>
+		<result column="PICTURE_NAME" property="prictureName"/>
+		<result column="PICTURE_URL" property="prictureUrl"/>
+		<result column="OUTER_NO" property="outerNo"/>
+	</resultMap>
+
+	<!-- 등록 SQL -->
+	<insert id="insertOuterPicture" parameterType="com.outer_shopping.project.vo.OuterPictureVo">
+		<selectKey resultType="int" keyProperty="prictureNo" order="BEFORE">
+			select PICTURE_NO.nextval from dual
+		</selectKey>
+		INSERT INTO OUTER_PICTURE
+		VALUES(
+				#{prictureNo},
+				#{prictureName},
+				#{prictureUrl},
+				#{outerNo}
+			   )
+	</insert>
+</mapper>

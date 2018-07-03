@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 public class MemberVo implements Serializable {
-	@Id
+
 	@Size(min=8, max=15, message="아이디는 8~15자입니다.")
 	//@Pattern(regexp="\\w{8,20}",message="아이디 형식이 잘못되었습니다.")
 	private String id;			//아이디

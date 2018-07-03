@@ -17,7 +17,7 @@ $(document).ready(function() {
 	//상품금액
 	$('td[name="tdPrice"]').each(function(){
 		var no = $(this).text();  
-		price = parseInt(no);
+		price = parseInt(price) + parseInt(no);
 		//상품가격
 		$("input[name='productPrice']").val(price);
 	});
@@ -42,16 +42,16 @@ $(document).ready(function() {
 	$("#totalPrice2").val(total);
 	
 	$("#removeProduct").click(function() {
-		$("input[name='check']:checked").each(function(){
+		$("input[name='checkBox']:checked").each(function(){
 			 var no = $(this).val();		
 			 
-			 var price = $('#productPrice'+no).val();
+			 var price = $('#tdPrice'+no).text();
 			 
 			 //총 상품 가격
 			 var productPrice = $('#productPrice').val();
 			 
 			 $('#productPrice').val(parseInt(productPrice) - parseInt(price));
-			
+
 			 
 			 //배송비 가격
 			 var cpp = $('#productPrice').val();
@@ -72,7 +72,7 @@ $(document).ready(function() {
 			 $("#totalPrice2").val(total);
 			 
 			 //해당 상품 삭제
-			 $("#checkProduct"+no).remove();
+			 $("#trProduct"+no).remove();
 		}) ;	
 	});
 
@@ -85,12 +85,42 @@ $(document).ready(function() {
 	//상품 주문
 	$('#buyB').on('click',function(){
 		
-		var productArr = []; 
+/* 		var productArr = []; 
 		
 		$("input[name='product']").each(function(){
 	    	productArr.push($(this).val());
 	    });
+*/
 
+		//상품정보 배열에 넣기
+		var rowData = [];
+		var productArr = []; 
+		
+
+		//테이블 행의 모든 값 가져오기
+		$('#tbodyProduct tr').each(function(i){   			    	
+	    	var tr = $('#tbodyProduct tr').eq(i);
+	    	
+
+		    var td = tr.children();
+		    rowData.push(tr.text());
+		    
+		    var cartNo = td.eq(1).text();
+	        var productNo = td.eq(2).text();
+	        var productName = td.eq(3).text();
+	        var productColor = td.eq(4).text();
+	        var productSize = td.eq(5).text();
+	        var productPrice = td.eq(6).text();
+	        
+	        productArr.push(cartNo);
+	        productArr.push(productNo);
+	        productArr.push(productName);
+	        productArr.push(productColor);
+	        productArr.push(productSize);
+	        productArr.push(productPrice);
+
+		});
+		//주문 정보 배열에 넣기
 		var deliveryInfoArr = []; 
 		
 		$("input[name='deliveryInfo']").each(function(){
@@ -98,9 +128,10 @@ $(document).ready(function() {
 			deliveryInfoArr.push(arr);
 		});	
 		
+		//메시지값 배열에 넣기
 		deliveryInfoArr.push($('#message').val());
 
-		if(confirm('주문 하시겠습니까?')) { 
+  		if(confirm('주문 하시겠습니까?')) { 
 			$.form({
 				"action": "${pageContext.request.contextPath}/member/orderProduct.do",
 				"type":"POST",
@@ -178,7 +209,7 @@ function getPostcodeAddress() {
 <jsp:include page="../include/loginForm.jsp" flush="false"/><br>
 주문내역
 	<div>
-		<table border="1" width="70%">
+		<table id="orderProduct" border="1" width="70%">
 			<thead>
 			<tr>
 				<th></th>
@@ -190,45 +221,33 @@ function getPostcodeAddress() {
 				<th>가격</th>
 			</tr>
 			</thead>
-			<tbody>
+			<tbody id="tbodyProduct">
 				<c:forEach var="orderList" items="${orderList}" varStatus="st">
-					<tr>
+					<tr id="trProduct${orderList.cartNo}">
 						<td>
-							<input type="checkBox" id="checkBox" name="checkBox">
+							<input type="checkBox" id="checkBox" name="checkBox" value="${orderList.cartNo}">
 						</td>
 						<td>${orderList.cartNo}</td>
 						<td>${orderList.productNo}</td>
 						<td>${orderList.productName}</td>
 						<td>${orderList.productColor}</td>
 						<td>${orderList.productSize}</td>
-						<td name="tdPrice">${orderList.productPrice}</td>
+						<td id="tdPrice${orderList.cartNo}" name="tdPrice">${orderList.productPrice}</td>
 					</tr>
 				</c:forEach>
-				<tr>
-						<td colspan="7" >
-							상품금액<input class="textTrans" type="text" id="productPrice" name="productPrice" size="6" value="0"> +
-							배송비<input class="textTrans" type="text" id="deliveryPrice" name="deliveryPrice" size="6" value="0"> = 
-							합계 : <input class="textTrans" type="text" id="totalPrice1" name="totalPrice" size="8" value="0"><br>
-						</td>
-				</tr>
 			</tbody>
 		</table>
-	
-<%-- 	
-		<c:forEach var="orderList" items="${orderList}" varStatus="st">
-			<div>
-					<div id ="checkProduct${orderList.cartNo}" name="checkProduct">
-						<input type="checkBox" id="cart${orderList.cartNo}" name="check" value="${orderList.cartNo}">
-						<input type="hidden" id="cartNo${orderList.cartNo}" name="cartNo" value="${orderList.cartNo}">
-						<input type="hidden" id="productNo${orderList.productNo}" name="product" value="${orderList.productNo}">
-						<input type="text" id="productName${orderList.cartNo}" name="product" value="${orderList.productName}">
-						<input type="text" id="productSize${orderList.cartNo}" name="product" value="${orderList.productSize}">
-						<input type="text" id="productColor${orderList.cartNo}" name="product" value="${orderList.productColor}">
-						<input type="text" id="productPrice${orderList.cartNo}" name="product" value="${orderList.productPrice}">
-					</div>
-			</div>
-		</c:forEach> 
---%>
+		<div>
+			<table border="1" width="70%">
+				<tr>
+					<td colspan="7" >
+								상품금액<input class="textTrans" type="text" id="productPrice" name="productPrice" size="6" value="0"> +
+								배송비<input class="textTrans" type="text" id="deliveryPrice" name="deliveryPrice" size="6" value="0"> = 
+								합계 : <input class="textTrans" type="text" id="totalPrice1" name="totalPrice" size="8" value="0"><br>
+					</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 <input type="button" id="removeProduct" name="removeProduct" value="상품삭제">
 <hr>	
@@ -284,7 +303,7 @@ function getPostcodeAddress() {
 			<tr>
 				<th>주소*</th>
 				<td>
-					<input type="text" id="zipcode" name="deliveryInfo" value="${memberVo.zipcode}" size="40">
+					<input type="text" id="zipcode" name="deliveryInfo" value="${memberVo.zipcode}" size="4">
 					<input type="button" value="주소 검색" onClick="getPostcodeAddress()"><br>
 					<input type="text" id="address" name="deliveryInfo" value="${memberVo.address}" size="70"> 기본주소<br>
 					<input type="text" id="address2" name="deliveryInfo" value="${memberVo.address2}" size="70"> 나머지주소
@@ -311,7 +330,7 @@ function getPostcodeAddress() {
 		</table>
 	</div>
 	<div>
-			<table border="1" width="50%">
+		<table border="1" width="50%">
 			<tr>
 				<th>결제 예정 금액</th>
 				<td>
