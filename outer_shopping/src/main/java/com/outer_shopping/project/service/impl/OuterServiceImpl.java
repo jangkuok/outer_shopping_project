@@ -28,6 +28,35 @@ public class OuterServiceImpl implements OuterService {
 			e.printStackTrace();
 		}
 	}
+	
+
+	/**
+	 * 아웃터 수정
+	 */
+	@Override
+	public void modifyOuter(OuterVo outer) {
+		try {
+			dao.updateOuter(outer);
+		}catch (Exception e) {
+			System.out.println("modifyOuter(service) : ");
+			e.printStackTrace();
+		}
+	}
+
+	
+	/**
+	 * 아웃터 삭제
+	 */	
+	@Override
+	public void removeOuter(int outerNo) {
+		try {
+			dao.deleteOuter(outerNo);
+		}catch (Exception e) {
+			System.out.println("removeOuter(service) : ");
+			e.printStackTrace();
+		}
+	}
+
 
 	/**
 	 * 아웃터 목록

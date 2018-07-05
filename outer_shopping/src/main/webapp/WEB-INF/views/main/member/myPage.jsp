@@ -45,7 +45,7 @@ function delete_member(){
 </script>
 </head>
 <body>
-<jsp:include page="../include/loginForm.jsp" flush="false"/><br>
+<%-- <jsp:include page="../include/loginForm.jsp" flush="false"/><br> --%>
 <c:if test="${msg == 'deleteError'}">
 	<script>
 		alert("비밀번호가 일치하지 않습니다.");

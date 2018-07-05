@@ -103,6 +103,7 @@ $(document).ready(function() {
 */	
 	//관심상품 등록
 	$("#wishB").click(function() {
+		
 		$.ajax
 		({		
 			"url":"${pageContext.request.contextPath}/outer/createWishList.do", 
@@ -115,7 +116,7 @@ $(document).ready(function() {
 					alert("이미 등록한 상품입니다.");
 				}
 				
-				if(data == "등록완료"){
+				if(data == "등록완료" ){
 					alert("관심상품이 등록 되었습니다.");	
 				}
 			}			
@@ -202,7 +203,7 @@ $(document).ready(function() {
 		</script>
 	</c:if>
 	
-	<jsp:include page="include/loginForm.jsp" flush="false"/><br>
+	<%-- <jsp:include page="include/loginForm.jsp" flush="false"/><br> --%>
 	
 	
 	<!-- 관리자 로그인 할 경우 -->
@@ -280,7 +281,7 @@ $(document).ready(function() {
 	</div>
 	<div style="text-align: center;">
 		<c:forEach var="imageList" items="${outer.imageList}" varStatus="st">
-			<img src="<c:url value='/image/${imageList.prictureName}'/>" width="650"/><br>
+			<img src="<c:url value='/image/${imageList.pictureName}'/>" width="650"/><br>
 		</c:forEach>
 	</div>
 </body>

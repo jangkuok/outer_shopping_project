@@ -20,7 +20,6 @@ public class OuterVo implements Serializable {
 
 	private String name;	//이름
 	
-	@Size(min=1, max=1000, message="내용을 작성하시오")
 	private String content;	//내용
 
 	private int price;		//가격
@@ -28,18 +27,19 @@ public class OuterVo implements Serializable {
 	private Date insertDate; //등록날짜
 	
 	private String imageName;
-	private String thumbnailUrl;
+	private String thumbnailName;
 	
 	private MultipartFile imageFile;
 	
 	private List<OuterSizeVo> sizeList;
 	private List<OuterImagesVo> imageList;
 	
+	
 	public OuterVo() {}
 
-	public OuterVo(int outerNo, String type, String name,
-			@Size(min = 1, max = 1000, message = "내용을 작성하시오") String content, int price, Date insertDate,
-			String imageName, String thumbnailUrl) {
+	
+	public OuterVo(int outerNo, String type, String name, String content, int price, Date insertDate,
+			String imageName, String thumbnailName) {
 		this.outerNo = outerNo;
 		this.type = type;
 		this.name = name;
@@ -47,12 +47,11 @@ public class OuterVo implements Serializable {
 		this.price = price;
 		this.insertDate = insertDate;
 		this.imageName = imageName;
-		this.thumbnailUrl = thumbnailUrl;
+		this.thumbnailName = thumbnailName;
 	}
 
-	public OuterVo(int outerNo, String type, String name,
-			@Size(min = 1, max = 1000, message = "내용을 작성하시오") String content, int price, Date insertDate,
-			String imageName, String thumbnailUrl, MultipartFile imageFile, List<OuterSizeVo> sizeList,
+	public OuterVo(int outerNo, String type, String name,String content, int price, Date insertDate,
+			String imageName, String thumbnailName, MultipartFile imageFile, List<OuterSizeVo> sizeList,
 			List<OuterImagesVo> imageList) {
 		this.outerNo = outerNo;
 		this.type = type;
@@ -61,7 +60,7 @@ public class OuterVo implements Serializable {
 		this.price = price;
 		this.insertDate = insertDate;
 		this.imageName = imageName;
-		this.thumbnailUrl = thumbnailUrl;
+		this.thumbnailName = thumbnailName;
 		this.imageFile = imageFile;
 		this.sizeList = sizeList;
 		this.imageList = imageList;
@@ -70,7 +69,7 @@ public class OuterVo implements Serializable {
 	@Override
 	public String toString() {
 		return "OuterVo [outerNo=" + outerNo + ", type=" + type + ", name=" + name + ", content=" + content + ", price="
-				+ price + ", insertDate=" + insertDate + ", imageName=" + imageName + ", thumbnailUrl=" + thumbnailUrl
+				+ price + ", insertDate=" + insertDate + ", imageName=" + imageName + ", thumbnailName=" + thumbnailName
 				+ ", imageFile=" + imageFile + ", sizeList=" + sizeList + ", imageList=" + imageList + "]";
 	}
 
@@ -130,12 +129,12 @@ public class OuterVo implements Serializable {
 		this.imageName = imageName;
 	}
 
-	public String getThumbnailUrl() {
-		return thumbnailUrl;
+	public String getThumbnailName() {
+		return thumbnailName;
 	}
 
-	public void setThumbnailUrl(String thumbnailUrl) {
-		this.thumbnailUrl = thumbnailUrl;
+	public void setThumbnailName(String thumbnailName) {
+		this.thumbnailName = thumbnailName;
 	}
 
 	public MultipartFile getImageFile() {
@@ -175,7 +174,7 @@ public class OuterVo implements Serializable {
 		result = prime * result + outerNo;
 		result = prime * result + price;
 		result = prime * result + ((sizeList == null) ? 0 : sizeList.hashCode());
-		result = prime * result + ((thumbnailUrl == null) ? 0 : thumbnailUrl.hashCode());
+		result = prime * result + ((thumbnailName == null) ? 0 : thumbnailName.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
@@ -247,11 +246,11 @@ public class OuterVo implements Serializable {
 		} else if (!sizeList.equals(other.sizeList)) {
 			return false;
 		}
-		if (thumbnailUrl == null) {
-			if (other.thumbnailUrl != null) {
+		if (thumbnailName == null) {
+			if (other.thumbnailName != null) {
 				return false;
 			}
-		} else if (!thumbnailUrl.equals(other.thumbnailUrl)) {
+		} else if (!thumbnailName.equals(other.thumbnailName)) {
 			return false;
 		}
 		if (type == null) {
@@ -264,5 +263,7 @@ public class OuterVo implements Serializable {
 		return true;
 	}
 
+	
+	
 		
 }

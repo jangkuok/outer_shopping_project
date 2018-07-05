@@ -17,13 +17,15 @@ var idck = 1;
 
 //중복체크 jquery
 $(document).ready(function(){
-	$("#idCheck").on("click",function(){
+	$("#joinIdCheck").click(function(){
+
 		$.ajax
 		({		
-			"url":"${pageContext.request.contextPath}/member/checkMemberId.do", 
-			"type":"POST",
-			"data":{"id":$("#id").val()},
-			"beforeSend":function()
+			url:"${pageContext.request.contextPath}/checkMember.do", 
+			type:"POST",
+			data:{"joinId" : $('input[name="id"]').val()},
+			dataType:"text",
+			beforeSend:function()
 			{
 				if(!$("#id").val())
 				{
@@ -31,10 +33,9 @@ $(document).ready(function(){
 					return false;
 				}
 			},
-			"success":function(data)
+			success:function(data)
 			{
-					
-				if($.trim(data) == 3)
+				if(data == "3")
 				{
 					alert("아이디는 8~15자입니다.");
 					$("#id").focus();
@@ -42,14 +43,14 @@ $(document).ready(function(){
 				}
 				
 				
-				if($.trim(data) == 1)
+				if(data == "1")
 				{
 					alert("존재하는 아이디 입니다.");
 					$("#id").focus().val("");
 					return false;
 				}
 
-				if($.trim(data) == 0)
+				if(data == "0")
 				{
 					alert("사용가능한 아이디 입니다.");
 					$("#pw").focus();
@@ -75,6 +76,8 @@ function join_button(){
         		return false;
         	}
         }
+    }else{
+    	return;
     }
 };
 
@@ -91,9 +94,9 @@ function join_button(){
 </head>
 <body>
 <input type="hidden" id="error" name="error" value="${error}">	
-	<form:form commandName="memberVo" id="join" name="join" method="post" action="${pageContext.request.contextPath}/member/joinCheck.do">
-			아이디 : 	<form:input id="id" name="id" path="id" size="25" value="${memberForm.id}"/>
-						<input type="button" id="idCheck" name="idCheck" value="중복확인">
+	<form:form commandName="memberVo" id="join" name="join" method="post" action="${pageContext.request.contextPath}/joinCheck.do">
+			아이디 : 	<form:input name="id" path="id" size="25" value="${memberForm.id}"/>
+						<input type="button" id="joinIdCheck" name="joinIdCheck" value="중복확인">
 						<form:errors path="id" cssClass="errMsg" /><br>
 			비밀번호 :  <form:password name="pw" path="pw" size="25" maxlength="20"/>
 						<form:errors path="pw" cssClass="errMsg" /><br>

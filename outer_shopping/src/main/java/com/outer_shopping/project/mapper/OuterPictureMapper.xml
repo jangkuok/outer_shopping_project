@@ -14,30 +14,45 @@
 	</sql> 
 	
 	<!-- 전체 조회 sql -->
-	<sql id="select-Outer-sql">
+	<sql id="select-Picture-sql">
 		SELECT 	PICTURE_NO, PICTURE_NAME, PICTURE_URL, OUTER_NO
 		FROM OUTER_PICTURE
 	</sql>	 
 	
 	<!-- 아웃터 resultMap -->
 	<resultMap id="outerPicture-resultmap" type="com.outer_shopping.project.vo.OuterPictureVo">
-		<id column="PICTURE_NO" property="prictureNo"/>
-		<result column="PICTURE_NAME" property="prictureName"/>
-		<result column="PICTURE_URL" property="prictureUrl"/>
+		<id column="PICTURE_NO" property="prctureNo"/>
+		<result column="PICTURE_NAME" property="pictureName"/>
+		<result column="PICTURE_URL" property="pictureUrl"/>
 		<result column="OUTER_NO" property="outerNo"/>
 	</resultMap>
 
 	<!-- 등록 SQL -->
 	<insert id="insertOuterPicture" parameterType="com.outer_shopping.project.vo.OuterPictureVo">
-		<selectKey resultType="int" keyProperty="prictureNo" order="BEFORE">
+		<selectKey resultType="int" keyProperty="pictureNo" order="BEFORE">
 			select PICTURE_NO.nextval from dual
 		</selectKey>
 		INSERT INTO OUTER_PICTURE
 		VALUES(
-				#{prictureNo},
-				#{prictureName},
-				#{prictureUrl},
+				#{pictureNo},
+				#{pictureName},
+				#{pictureUrl},
 				#{outerNo}
 			   )
 	</insert>
+	
+	<!-- 사진 삭제 SQL -->
+	<delete id="deleteOuterPicture" parameterType="int">
+		DELETE FROM OUTER_PICTURE WHERE PICTURE_NO = #{pictureNo}
+	</delete>
+	
+	<!-- 사진 list 조회 -->
+	<select id="selectOuterPictureList" resultMap="outerPicture-resultmap">
+		<include refid="select-Picture-sql"/>
+		WHERE OUTER_NO = #{outerNo}
+	</select>
+	
+	
+	
+	
 </mapper>

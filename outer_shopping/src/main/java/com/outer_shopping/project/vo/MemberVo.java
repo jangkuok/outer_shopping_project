@@ -27,17 +27,22 @@ public class MemberVo implements Serializable {
 	private String pw;			//비밀번호
 	
 	@NotNull
-	@Size(message="이름을 입력하시오.")
+	@Size(min=1, message="이름을 입력하시오.")
 	private String name;		//이름
 	
 	@NotNull
-	@Size(message="이메일 입력하시오.")
+	@Size(min=1, message="이메일 입력하시오.")
 	private String email;		//이메일
 	
+	@NotNull
+	@Size(min=1, max=11, message="이메일 입력하시오.")
 	private String phoneNum;	//핸드폰번호
 	private String zipcode;		//우편번호
 	private String address;		//주소
 	private String address2;	//주소2
+	
+	@NotNull
+	@Size(min=1, message="성별을 선택하시오.")
 	private String sex; 		//성별
 	private String grade; 		//등급
 	private int enabled;		//사용가능

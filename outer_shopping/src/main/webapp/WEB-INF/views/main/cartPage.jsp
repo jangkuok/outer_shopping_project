@@ -116,7 +116,7 @@ function orderProduct(){
 </script>
 </head>
 <body>
-<jsp:include page="include/loginForm.jsp" flush="false"/><br>
+<%-- <jsp:include page="include/loginForm.jsp" flush="false"/><br> --%>
 <input type="hidden" id="count" name="count" value="${sessionScope.size()}">
 <c:if test="${not empty sessionScope.cart}">
 		<table border="1" width="50%">

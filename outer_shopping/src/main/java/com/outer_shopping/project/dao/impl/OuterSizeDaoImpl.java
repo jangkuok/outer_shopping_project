@@ -43,6 +43,44 @@ public class OuterSizeDaoImpl implements OuterSizeDao {
 		
 	}
 
+	
+	
+	/**
+	 * 사이즈 삭제
+	 */
+	@Override
+	public void deleteOuterSize(int outerNo) {
+		try {
+			session.delete(makeSqlId("deleteOuterSize"), outerNo);
+		}catch (Exception e) {
+			System.out.println("deleteOuterSize(dao) : ");
+			e.printStackTrace();
+		}
+	}
+
+	
+	
+	/**
+	 * 상품 사이즈 목록
+	 */
+	@Override
+	public List<OuterSizeVo> selectOuterSizeProduct(int outerNo) {
+		List<OuterSizeVo> list = null;
+		
+		try {
+			list = session.selectList(makeSqlId("selectSizeProductCheck"), outerNo);
+		}catch (Exception e) {
+			System.out.println("selectSizeProductCheck(dao) : ");
+			e.printStackTrace();
+		}	
+		
+		return list;
+	}
+
+
+	/**
+	 * 사이즈 목록
+	 */
 	@Override
 	public List<OuterSizeVo> selectListOuterSizeColor(int outerNo, String type) {
 		

@@ -32,6 +32,34 @@ public class OuterSizeServiceImpl implements OuterSizeService {
 		
 	}
 
+	/**
+	 * 사이즈 삭제
+	 */
+	@Override
+	public void removeOuterSize(int outerNo) {
+		try {
+			sizeDao.deleteOuterSize(outerNo);
+		}catch (Exception e) {
+			System.out.println("removeOuterSize(service) : ");
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public List<OuterSizeVo> getListOuterSizeProduct(int outerNo) {
+	
+		List<OuterSizeVo> list = null;
+		
+		try {
+			list = sizeDao.selectOuterSizeProduct(outerNo);
+		}catch (Exception e) {
+			System.out.println("getListOuterSizeProduct(service) : ");
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
 	@Override
 	public List<OuterSizeVo> getListOuterSizeColor(int outerNo, String type) {
 	

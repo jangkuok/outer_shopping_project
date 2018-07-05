@@ -87,6 +87,7 @@ public class OuterController {
 			
 			if(wishService.getWishListOverlapped(memberId, outerNo) != null) {
 				logger.info("############# 관심상품 존재 #############");
+				
 				return "존재";
 			}
 			

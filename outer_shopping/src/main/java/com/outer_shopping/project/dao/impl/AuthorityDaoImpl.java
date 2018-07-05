@@ -23,13 +23,12 @@ public class AuthorityDaoImpl implements AuthorityDao {
 	}
 	
 	/**
-	 * 유저 등록
+	 * 권한 등록
 	 */
 	@Override
 	public void insertAuthority(AuthorityVo authority) {
 		try {
 			session.insert(makeSqlId("insertAuthority"),authority);
-			System.out.println("유저 등록 완료");
 		} catch (Exception e) {
 			System.out.println("insertAuthority(dao) : ");
 			e.printStackTrace();
@@ -37,7 +36,7 @@ public class AuthorityDaoImpl implements AuthorityDao {
 	}
 	
 	/**
-	 * 유저 업데이트
+	 * 권한 업데이트
 	 */
 	@Override
 	public void updateAuthority(AuthorityVo authority) {
@@ -50,7 +49,7 @@ public class AuthorityDaoImpl implements AuthorityDao {
 	}
 	
 	/**
-	 * 유저 삭제
+	 * 권한 삭제
 	 */
 	@Override
 	public void deleteAuthority(String loginId) {
@@ -63,7 +62,7 @@ public class AuthorityDaoImpl implements AuthorityDao {
 	}
 	
 	/**
-	 * 유저조회
+	 * 권한 조회
 	 */
 	@Override
 	public AuthorityVo selectAuthorityById(String loginId) {

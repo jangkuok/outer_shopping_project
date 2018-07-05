@@ -14,6 +14,51 @@ public class AuthorityServiceImpl implements AuthorityService {
 	@Autowired
 	private AuthorityDao authorityDao;
 	
+	
+	
+	
+	
+	/**
+	 * 권한 등록
+	 */
+	@Override
+	public void createAuthority(AuthorityVo authority) {
+		try {
+			authorityDao.insertAuthority(authority);
+		}catch (Exception e) {
+			System.out.println("createAuthority(service) : ");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 권한 수정
+	 */
+	@Override
+	public void modifyAuthority(AuthorityVo authority) {
+		try {
+			authorityDao.updateAuthority(authority);
+		}catch (Exception e) {
+			System.out.println("modifyAuthority(service) : ");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 권한 삭제
+	 */
+	@Override
+	public void removeAuthority(String loginId) {
+		try {
+			authorityDao.deleteAuthority(loginId);
+		}catch (Exception e) {
+			System.out.println("removeAuthority(service) : ");
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * 권한 확인
 	 */

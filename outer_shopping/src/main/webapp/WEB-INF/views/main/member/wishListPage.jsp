@@ -45,15 +45,54 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<jsp:include page="../include/loginForm.jsp" flush="false"/><br>
+<%-- <jsp:include page="../include/loginForm.jsp" flush="false"/><br> --%>
 	<c:if test="${empty list}">
 		<div>
 			관심상품 내역이 없습니다.
 		</div>
-	</c:if>
-	
+	</c:if>	
 	<c:if test="${not empty list}">
-	<div id ="checkList">
+			<table border="1">
+			<thead>
+			<tr>
+				<th></th>
+				<th>이미지</th>
+				<th>상품 이름</th>
+				<th>가격</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+			<c:forEach var="wishList" items="${list}" varStatus="st">
+				<div>
+					<c:forEach var="outerWishList" items="${wishList.list}" varStatus="st">					
+						<td>
+							<input type="checkBox" id="check${wishList.wishNo}" name="checkBox" value="${wishList.wishNo}">
+						</td>
+						<td>						
+							<img src="<c:url value='/image/thumbnail/${outerWishList.thumbnailName}'/>"/>
+						</td>
+						<td>
+							<a href="${pageContext.request.contextPath}/outer/outerView.do?outerNo=${outerWishList.outerNo}">
+								${outerWishList.name}
+							</a>
+						</td>
+						<td>
+							${outerWishList.price}
+						</td>
+					</c:forEach>
+				</div>
+			</c:forEach>
+			</tr>
+			</tbody>
+		</table>
+		<input type="button" id="deleteWishList" name="deleteWishList" value="상품삭제">
+		<input type="button" id="" name="" value="장바구니 담기">
+	
+	
+	
+	
+<%-- 	<div id ="checkList">
 		<c:forEach var="wishList" items="${list}" varStatus="st">
 			<div>
 				<c:forEach var="outerWishList" items="${wishList.list}" varStatus="st">
@@ -66,10 +105,9 @@ $(document).ready(function() {
 				</c:forEach>
 			</div>
 		</c:forEach>
-	</div>
+	</div> --%>
 	</c:if>
-	<input type="button" id="deleteWishList" name="deleteWishList" value="상품삭제">
-	<input type="button" id="" name="" value="장바구니 담기">
+
 	
 	
 </body>

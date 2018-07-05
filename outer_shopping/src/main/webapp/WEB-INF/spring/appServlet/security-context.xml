@@ -19,8 +19,8 @@
 		<!-- 로그인 페이지 -->
 		<form-login login-page="/loginFormPage.do"
 					login-processing-url="/loginForm.do"
-					username-parameter="id"
-					password-parameter="pw"
+					username-parameter="loginId"
+					password-parameter="loginPw"
 					authentication-failure-handler-ref="loginFailHandler"/> 
 					
 		<!-- 로그아웃관련설정 -->		

@@ -206,7 +206,7 @@ function getPostcodeAddress() {
    
 </head>
 <body>
-<jsp:include page="../include/loginForm.jsp" flush="false"/><br>
+<%-- <jsp:include page="../include/loginForm.jsp" flush="false"/><br> --%>
 주문내역
 	<div>
 		<table id="orderProduct" border="1" width="70%">

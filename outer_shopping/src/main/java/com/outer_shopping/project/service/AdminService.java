@@ -8,5 +8,6 @@ import com.outer_shopping.project.vo.AdminVo;
 public interface AdminService {
 	
 	
+	
 	AdminVo findAdmin(String id);
 }

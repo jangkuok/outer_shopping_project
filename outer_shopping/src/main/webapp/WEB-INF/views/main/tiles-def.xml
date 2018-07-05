@@ -1,0 +1,27 @@
+<!DOCTYPE tiles-definitions PUBLIC
+  "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+  "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+ 
+<tiles-definitions>
+
+    <definition name="layout" template="/WEB-INF/views/main/layout/layout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header" value="/WEB-INF/views/main/layout/header.jsp" />
+        <put-attribute name="side" value="/WEB-INF/views/main/layout/side.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/main/layout/footer.jsp" />
+    </definition>
+ 
+ 	<!-- layout를 상속받은 main/mainPage -->
+    <definition name="main/mainPage" extends="layout">
+        <put-attribute name="content" value="/WEB-INF/views/main/layout/mainPage.jsp" />
+    </definition>
+    
+    <!-- 동적매핑 -->
+    <definition name="*" extends="layout">
+	  <put-attribute name="content" value="/WEB-INF/views/main/{1}.jsp" />
+ 	</definition>
+
+ 	<definition name="*/*" extends="layout">
+        <put-attribute name="content" value="/WEB-INF/views/main/{1}/{2}.jsp" />
+    </definition>
+</tiles-definitions>

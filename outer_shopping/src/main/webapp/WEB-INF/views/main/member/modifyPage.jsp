@@ -71,7 +71,7 @@
 <title>수정하기</title>
 </head>
 <body>
-<jsp:include page="../include/loginForm.jsp" flush="false"/><br>
+<%-- <jsp:include page="../include/loginForm.jsp" flush="false"/><br> --%>
 		<form:form commandName="memberVo" id="modify" name="modify" method="post" action="${pageContext.request.contextPath}/member/modifyCheck.do">
 			아이디 : 	<form:input id="id" name="id" path="id" size="25" readonly="true" value="${memberVo.id}" /><br>
 			비밀번호 :  <form:password name="pw" path="pw" size="25" maxlength="20"/>

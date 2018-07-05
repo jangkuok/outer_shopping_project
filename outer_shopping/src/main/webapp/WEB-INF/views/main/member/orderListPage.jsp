@@ -118,7 +118,7 @@ function handingOrder(i){
       </div>
     </div>
     
-<jsp:include page="../include/loginForm.jsp" flush="false"/><br>
+<%-- <jsp:include page="../include/loginForm.jsp" flush="false"/><br> --%>
 	<c:if test="${empty list}">
 		<div>
 			주문 내역이 없습니다.

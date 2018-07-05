@@ -74,7 +74,6 @@
 		</property> 
 	</bean> 
 -->
-
 	<!-- Fileupload : 파일 관리자 id(multipartResolver)는 가급적 그대로 사용할 것! -->
 	<bean id="multipartResolver"
 		   class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

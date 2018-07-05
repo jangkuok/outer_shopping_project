@@ -13,6 +13,21 @@ public interface OuterService {
 	void createOuter(OuterVo outer);
 	
 	/**
+	 * 아웃터 수정
+	 * @param outer
+	 */
+	void modifyOuter(OuterVo outer);	
+	
+
+	/**
+	 * 아웃터 삭제
+	 * @param outerNo
+	 */
+	void removeOuter(int outerNo);		
+	
+	
+
+	/**
 	 * 아웃터 목록
 	 * @param outer
 	 */

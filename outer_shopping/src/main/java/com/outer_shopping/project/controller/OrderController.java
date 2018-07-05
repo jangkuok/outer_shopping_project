@@ -108,7 +108,7 @@ public class OrderController {
 	@RequestMapping(value = "/orderProduct.do", method = {RequestMethod.GET,RequestMethod.POST})
 	public String orderProduct(Model model,@RequestParam(value="productList[]",required=false) List<String> productList,
 			@RequestParam(value="deliveryInfoList[]",required=false) List<String> deliveryInfoList,
-			@RequestParam(value="loginId",required=false) String id,@RequestParam(value="orderNo",required=false) int orderNo) {
+			@RequestParam(value="loginId",required=false) String id, @RequestParam(value="orderNo",required=false) int orderNo) {
 		
 		OrderCheckVo check = new OrderCheckVo();
 		

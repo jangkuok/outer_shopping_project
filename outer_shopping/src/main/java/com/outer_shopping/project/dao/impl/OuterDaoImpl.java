@@ -49,6 +49,37 @@ public class OuterDaoImpl implements OuterDao {
 		}	
 	}
 
+	
+	
+	/**
+	 * 아웃터 수정
+	 */
+	@Override
+	public void updateOuter(OuterVo outer) {
+		try {
+			session.update(makeSqlId("updateOuter"), outer);
+		}catch (Exception e) {
+			System.out.println("updateOuter(dao) : ");
+			e.printStackTrace();
+		}	
+	}
+	
+	
+	
+	/**
+	 * 아웃터 삭제
+	 */
+	@Override
+	public void deleteOuter(int outerNo) {
+		try {
+			session.delete(makeSqlId("deleteOuter"), outerNo);
+		}catch (Exception e) {
+			System.out.println("deleteOuter(dao) : ");
+			e.printStackTrace();
+		}
+		
+	}
+
 	/**
 	 * 아웃터 목록
 	 */

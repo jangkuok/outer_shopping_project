@@ -22,7 +22,9 @@
 	<sql id="select-wishList-outer-sql">
 	SELECT		w.WISH_NO, w.MEMBER_ID,
 			  	o.OUTER_TYPE, o.OUTER_NAME, 
-				o.OUTER_CONTENT, o.OUTER_PRICE, o.OUTER_DATE, o.OUTER_NO 
+				o.OUTER_CONTENT, o.OUTER_PRICE, 
+				o.OUTER_DATE, o.OUTER_THUMBNAIL_NAME, 
+				o.OUTER_IMAGENAME, o.OUTER_NO  
 	FROM		WISHLIST w, OUTER_TB o	
 	WHERE		w.OUTER_NO = o.OUTER_NO (+)
 	</sql>
@@ -43,6 +45,8 @@
 			<result column="OUTER_CONTENT" property="content"/>
 			<result column="OUTER_PRICE" property="price"/>
 			<result column="OUTER_DATE" property="insertDate"/>
+			<result column="OUTER_THUMBNAIL_NAME" property="thumbnailName"/>
+			<result column="OUTER_IMAGENAME" property="imageName"/>
 		</collection>
 	</resultMap>
 

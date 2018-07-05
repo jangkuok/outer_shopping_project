@@ -2,6 +2,7 @@ package com.outer_shopping.project.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.outer_shopping.project.service.AuthorityService;
 import com.outer_shopping.project.service.MemberService;
 import com.outer_shopping.project.service.OrderProductService;
 import com.outer_shopping.project.service.WishListSerice;
+import com.outer_shopping.project.vo.AuthorityVo;
 import com.outer_shopping.project.vo.MemberVo;
 import com.outer_shopping.project.vo.OrderCheckVo;
 import com.outer_shopping.project.vo.OrderProductVo;
@@ -40,65 +43,20 @@ public class MemberController {
 	@Autowired
 	private OrderProductService orderService;
 	
+	@Autowired
+	private AuthorityService authorityService;
+	
 	//회원가입 성공
 	@RequestMapping("/successJoinPage.do")
 	public String successPage() {
 		
 		return "/member/successJoinPage";
 	}	
-	
-	/**
-	 * 회원가입 폼
-	 */
-	@RequestMapping(value = "/joinCheck.do", method = RequestMethod.POST)
-	public ModelAndView joinForm(Model model,@Valid @ModelAttribute("memberVo") MemberVo memberVo,
-								BindingResult errors) {
-	
-		ModelAndView mv = new ModelAndView();
-	        
-		//에러 발생시 
-		if(errors.hasErrors()) {
-			logger.info("############# 회원가입 에러 #############");
-			
-			mv.addObject("error","error");
-			mv.addObject("memberVo", memberVo);
-			mv.setViewName("joinPage");
-			
-		}else{
 
-			service.joinMember(memberVo,memberVo.getId(),memberVo.getPw());
-			
-			mv.addObject("member", memberVo);
-			mv.setViewName("member/successJoinPage");
-	       
-			logger.info("############# 회원가입 완료 #############");
-		}
-			
-		return mv;
-	}	
-
-	/**
-	 * 아이디 중복확인
-	 */
-	@RequestMapping(value="/checkMemberId.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String MemberidCheck(@RequestParam(value="id",required=false) String id) {
-		
-		logger.info("############# 아이디 중복확인 #############");
-		
-		int cnt = 3;
-		
-		if(id.length() >= 8 ) {
-			cnt = service.checkMemberId(id);
-		}
-
-		return String.valueOf(cnt);
-	}
-	
 	/**
 	 * 회원 정보 확인(마이페이지) 
 	 */
-	@RequestMapping(value="/myPage.do", method = RequestMethod.POST)
+	@RequestMapping(value="/myPage.do", method = RequestMethod.GET	)
 	public String myPage(Model model,@RequestParam(value="id",required=false) String id) {
 		
 		model.addAttribute("memberVo", service.viewMember(id));
@@ -136,8 +94,14 @@ public class MemberController {
 			mv.setViewName("member/modifyPage");
 			
 		}else{
-
 			service.modifyMember(memberVo);
+			
+			AuthorityVo authority = authorityService.findAuthority(memberVo.getId());
+			
+			authority.setLoginPw(memberVo.getPw());
+			
+			authorityService.modifyAuthority(authority);
+			
 			mv.addObject("memberVo", memberVo);
 			mv.setViewName("member/myPage");
 			
@@ -151,10 +115,13 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "/deleteMember.do", method = RequestMethod.POST)
 	public String deleteMember(Model model,@RequestParam(value="id",required=false) String id,
-			@RequestParam(value="pw",required=false) String pw, @RequestParam(value="pw2",required=false) String pw2) {		
+			@RequestParam(value="pw",required=false) String pw, @RequestParam(value="pw2",required=false) String pw2,
+			HttpSession session) {		
 		if(pw.equals(pw2)) {
 			service.deleteMember(id);
-			logger.info("############# 회원삭제 완료 #############");
+			authorityService.removeAuthority(id);
+
+			logger.info("############# 회원탈퇴 완료 #############");
 		}else {
 
 			logger.info("############# 회원삭제 비밀번호 불일치 #############");
@@ -164,7 +131,7 @@ public class MemberController {
 			return "member/myPage";
 		}
 		logger.info("############# 메인페이지 이동 #############");
-		return "mainPage";
+		return "redirect:/logoutButton.do";
 	}
 	
 	/**

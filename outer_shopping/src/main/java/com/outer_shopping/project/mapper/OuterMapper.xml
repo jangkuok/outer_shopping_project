@@ -11,7 +11,7 @@
 	 
 	<sql id="all-column">
 	
-	OUTER_NO, OUTER_TYPE, OUTER_NAME, OUTER_CONTENT, OUTER_PRICE, OUTER_DATE, OUTER_THUMBNAIL_URL, OUTER_IMAGENAME
+	OUTER_NO, OUTER_TYPE, OUTER_NAME, OUTER_CONTENT, OUTER_PRICE, OUTER_DATE, OUTER_THUMBNAIL_NAME, OUTER_IMAGENAME
 	</sql> 
 	
 	<!-- 전체 조회 sql -->
@@ -19,7 +19,7 @@
 		SELECT 	OUTER_NO, OUTER_TYPE, 
 				OUTER_NAME, OUTER_CONTENT, 
 				OUTER_PRICE, OUTER_DATE, 
-				OUTER_THUMBNAIL_URL, OUTER_IMAGENAME
+				OUTER_THUMBNAIL_NAME, OUTER_IMAGENAME
 		FROM OUTER_TB
 	</sql>	 
 	
@@ -27,7 +27,7 @@
 	<sql id="select-Outer-size-sql">
 		SELECT  	o.OUTER_TYPE, o.OUTER_NAME, 
 					o.OUTER_CONTENT, o.OUTER_PRICE, 
-					o.OUTER_DATE, o.OUTER_THUMBNAIL_URL, o.OUTER_IMAGENAME,
+					o.OUTER_DATE, o.OUTER_THUMBNAIL_NAME, o.OUTER_IMAGENAME,
 					s.SIZE_NO, s.SIZE_TYPE, s.CHEST,	
 					s.SLEEVE, s.SHOULDER, 
 					s.WHOLE, s.AMOUNT, s.COLOR, s.OUTER_NO 
@@ -39,7 +39,7 @@
 		<sql id="select-Outer-size-picture-sql">
 		SELECT  	o.OUTER_TYPE, o.OUTER_NAME, 
 					o.OUTER_CONTENT, o.OUTER_PRICE, 
-					o.OUTER_DATE, o.OUTER_THUMBNAIL_URL, o.OUTER_IMAGENAME,
+					o.OUTER_DATE, o.OUTER_THUMBNAIL_NAME, o.OUTER_IMAGENAME,
 					s.SIZE_NO, s.SIZE_TYPE, s.CHEST,	
 					s.SLEEVE, s.SHOULDER, 
 					s.WHOLE, s.AMOUNT, s.COLOR, s.OUTER_NO,
@@ -59,7 +59,7 @@
 		<result column="OUTER_CONTENT" property="content"/>
 		<result column="OUTER_PRICE" property="price"/>
 		<result column="OUTER_DATE" property="insertDate"/>
-		<result column="OUTER_THUMBNAIL_URL" property="thumbnailUrl"/>
+		<result column="OUTER_THUMBNAIL_NAME" property="thumbnailName"/>
 		<result column="OUTER_IMAGENAME" property="imageName"/>
 	</resultMap>
 	
@@ -82,9 +82,9 @@
 	<!-- 아웃터 + 사이즈 + 이미지 resultMap -->
 	<resultMap type="com.outer_shopping.project.vo.OuterVo" id="outer-size-picture-resultmap" extends="outer-size-resultmap" >
 		<collection property="imageList" ofType="com.outer_shopping.project.vo.OuterPictureVo">
-			<id column="PICTURE_NO" property="prictureNo"/>
-		<result column="PICTURE_NAME" property="prictureName"/>
-		<result column="PICTURE_URL" property="prictureUrl"/>
+			<id column="PICTURE_NO" property="pictureNo"/>
+		<result column="PICTURE_NAME" property="pictureName"/>
+		<result column="PICTURE_URL" property="pictureUrl"/>
 		<result column="OUTER_NO" property="outerNo"/>
 		</collection>
 	</resultMap>
@@ -102,7 +102,7 @@
 				#{content},
 				#{price},
 				SYSDATE,
-				#{thumbnailUrl},
+				#{thumbnailName},
 				#{imageName}
 			   )
 	</insert>
@@ -110,13 +110,12 @@
 	<!-- 상품 수정 SQL -->
 	<update id="updateOuter" parameterType="com.outer_shopping.project.vo.OuterVo">
 		UPDATE 	OUTER_TB 
-		SET		
-				OUTER_TYPE = #{type},
+		SET		OUTER_TYPE = #{type},
 				OUTER_NAME = #{name},
 				OUTER_CONTENT = #{content},
 				OUTER_PRICE = #{price},
 				OUTER_DATE = #{insertDate},
-				OUTER_THUMBNAIL_URL = #{thumbnailUrl},
+				OUTER_THUMBNAIL_NAME = #{thumbnailName},
 				OUTER_IMAGENAME = #{imageName}
 		WHERE	OUTER_NO = #{outerNo}
 	</update>

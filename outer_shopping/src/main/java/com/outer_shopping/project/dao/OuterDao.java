@@ -12,7 +12,19 @@ public interface OuterDao {
 	 */
 	void insertOuter(OuterVo outer);
 	
+	/**
+	 * 아웃터 수정
+	 * @param outer
+	 */
+	void updateOuter(OuterVo outer);	
 	
+	/**
+	 * 아웃터 삭제
+	 * @param outerNo
+	 */
+	void deleteOuter(int outerNo);	
+	
+
 	/**
 	 * 아웃터 목록
 	 */

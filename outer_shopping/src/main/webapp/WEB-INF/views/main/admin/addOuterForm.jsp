@@ -9,8 +9,8 @@
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
  $(document).ready(function() {
-	//$('div[name="sizeTable"]').hide();
-	//$('#imageAddTable').hide();
+	$('div[name="sizeTable"]').hide();
+	$('#imageAddTable').hide();
 	//상품등록
 	$("#addButton").click(function() {
 		
@@ -74,7 +74,7 @@
 		'<td><input type="number" id="sleeve'+index+'" name="productSize" size="3"></td>'+
 		'<td><input type="number" id="shoulder'+index+'" name="productSize" size="3"></td>'+
 		'<td><input type="number" id="whole'+index+'" name="productSize" size="3"></td>'+											
-		'<td><input type="number" id="amount'+index+'" name="productSize" value="${outerVo.price}"></td>'+
+		'<td><input type="number" id="amount'+index+'" name="productSize" value=""></td>'+
 		'<td><select id ="color_'+index+'" name="color"><option value="선택하세요">선택하세요</option>'+
 		'<option style="background-color:black;color:white" value="블랙">블랙</option>'+
 		'<option style="background-color:white" value="화이트">화이트</option>'+
@@ -165,14 +165,22 @@
 			"dataType":"text",
 			"beforeSend":function()
 			{
-
+				$('input[name="productSize"]').each(function(){   	
+		 			if($(this).val() == "" || $(this).val() == null || $(this).val() == '0' || $(this).val() == '선택하세요'){
+		 				alert("사이즈 입력을 해주세요");
+		 				return false;
+		 			};
+					
+				});	
 			},
 			"success":function(data)
 			{
-				alert("성공");
-				
-				$('#imageAddTable').show();
-				$('#imageMinusButton').hide();
+				if(confirm('등록 하시겠습니까?')) { 
+					$('#imageAddTable').show();
+					$('#imageMinusButton').hide();
+			    }else { 
+			    	return;
+			   	}
 			}
 		});
 		
@@ -197,14 +205,31 @@
 			$("#imageTable tr:last").remove();	
 			count--;
 		}
-		
 	});
+	
+	$("#addPicture").on('click',function() {
+		
+		$('input[name="imageFiles"]').each(function(){
+			if($(this).val() == '' || $(this).val() == null){
+				alert("상품이미지를 등록하시오");
+				return false;
+			}
+		});
+		
+		if(confirm('등록 하시겠습니까?')) { 
+			$('#outerPictureVo').submit();
+	    }else { 
+	    	return;
+	   	}
+	});
+	
 });
 </script>
 </head>
 <body>
 <div>
 <form id="outerVo" name="outerVo" enctype="multipart/form-data">
+
 	<table id="outerAdd" border="1" width="50%">
 		<tr>
 			<th width="20%">종류</th>
@@ -316,6 +341,7 @@
 		<form:form modelAttribute="outerPictureVo" id="outerPictureVo" name="outerPictureVo" 
 			action="${pageContext.request.contextPath}/admin/addOuterPicture.do" method="post" enctype="multipart/form-data">
 			<form:input path="outerNo" name="outerNo" value=""/>
+			
 				<table id="imageTable" border="1" width="35%">
 					<div>
 						<input type="button" id="imagePlusButton" value="+">
@@ -334,7 +360,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<input type="submit" id="addPicture" value="등록">
+				<input type="button" id="addPicture" name="addPicture" value="등록">
 		</form:form>
 	</div>
 

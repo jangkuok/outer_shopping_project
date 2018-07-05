@@ -54,6 +54,18 @@
 	</insert>
 	
 	
+	<!-- 사이즈 삭제 SQL -->
+	<delete id="deleteOuterSize" parameterType="int">
+		DELETE FROM OUTER_SIZE WHERE OUTER_NO = #{outerNo}
+	</delete>
+	
+	<!-- 상품 목록 확인 SQL -->	 	
+	<select id="selectSizeProductCheck" parameterType="int" resultMap="outerSize-resultmap">
+		<include refid="select-OuterSize-sql"/>
+		WHERE OUTER_NO = #{outerNo}
+	</select>	
+	
+	
 	<!-- 상품 사이즈 목록 확인 SQL -->	 	
 	<select id="selectSizeColorCheck" parameterType="hashmap" resultMap="outerSize-resultmap">
 		<include refid="select-OuterSize-sql"/>

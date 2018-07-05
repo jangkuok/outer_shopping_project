@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class OuterPictureVo {
-	private int prictureNo; 	 	//사진번호
-	private String prictureName;	//사진이름
-	private String prictureUrl;		//사진url
+	private int pictureNo; 	 	//사진번호
+	private String pictureName = "";	//사진이름
+	private String pictureUrl = "";		//사진url
 	private int outerNo;			//아웃터 번호
 	
 	private  List<MultipartFile> imageFiles;
@@ -16,19 +16,19 @@ public class OuterPictureVo {
 	public OuterPictureVo() {}
 
 
-	public OuterPictureVo(int prictureNo, String prictureName, String prictureUrl, int outerNo) {
-		this.prictureNo = prictureNo;
-		this.prictureName = prictureName;
-		this.prictureUrl = prictureUrl;
+	public OuterPictureVo(int pictureNo, String pictureName, String pictureUrl, int outerNo) {
+		this.pictureNo = pictureNo;
+		this.pictureName = pictureName;
+		this.pictureUrl = pictureUrl;
 		this.outerNo = outerNo;
 	}
 
 
-	public OuterPictureVo(int prictureNo, String prictureName, String prictureUrl, int outerNo,
+	public OuterPictureVo(int pictureNo, String pictureName, String pictureUrl, int outerNo,
 			List<MultipartFile> imageFiles) {
-		this.prictureNo = prictureNo;
-		this.prictureName = prictureName;
-		this.prictureUrl = prictureUrl;
+		this.pictureNo = pictureNo;
+		this.pictureName = pictureName;
+		this.pictureUrl = pictureUrl;
 		this.outerNo = outerNo;
 		this.imageFiles = imageFiles;
 	}
@@ -36,38 +36,38 @@ public class OuterPictureVo {
 
 	@Override
 	public String toString() {
-		return "OuterPictureVo [prictureNo=" + prictureNo + ", prictureName=" + prictureName + ", prictureUrl="
-				+ prictureUrl + ", outerNo=" + outerNo + ", imageFiles=" + imageFiles + "]";
+		return "OuterPictureVo [pictureNo=" + pictureNo + ", pictureName=" + pictureName + ", pictureUrl=" + pictureUrl
+				+ ", outerNo=" + outerNo + ", imageFiles=" + imageFiles + "]";
 	}
 
 
-	public int getPrictureNo() {
-		return prictureNo;
+	public int getPictureNo() {
+		return pictureNo;
 	}
 
 
-	public void setPrictureNo(int prictureNo) {
-		this.prictureNo = prictureNo;
+	public void setPictureNo(int pictureNo) {
+		this.pictureNo = pictureNo;
 	}
 
 
-	public String getPrictureName() {
-		return prictureName;
+	public String getPictureName() {
+		return pictureName;
 	}
 
 
-	public void setPrictureName(String prictureName) {
-		this.prictureName = prictureName;
+	public void setPictureName(String pictureName) {
+		this.pictureName = pictureName;
 	}
 
 
-	public String getPrictureUrl() {
-		return prictureUrl;
+	public String getPictureUrl() {
+		return pictureUrl;
 	}
 
 
-	public void setPrictureUrl(String prictureUrl) {
-		this.prictureUrl = prictureUrl;
+	public void setPictureUrl(String pictureUrl) {
+		this.pictureUrl = pictureUrl;
 	}
 
 
@@ -97,9 +97,9 @@ public class OuterPictureVo {
 		int result = 1;
 		result = prime * result + ((imageFiles == null) ? 0 : imageFiles.hashCode());
 		result = prime * result + outerNo;
-		result = prime * result + ((prictureName == null) ? 0 : prictureName.hashCode());
-		result = prime * result + prictureNo;
-		result = prime * result + ((prictureUrl == null) ? 0 : prictureUrl.hashCode());
+		result = prime * result + ((pictureName == null) ? 0 : pictureName.hashCode());
+		result = prime * result + pictureNo;
+		result = prime * result + ((pictureUrl == null) ? 0 : pictureUrl.hashCode());
 		return result;
 	}
 
@@ -126,26 +126,28 @@ public class OuterPictureVo {
 		if (outerNo != other.outerNo) {
 			return false;
 		}
-		if (prictureName == null) {
-			if (other.prictureName != null) {
+		if (pictureName == null) {
+			if (other.pictureName != null) {
 				return false;
 			}
-		} else if (!prictureName.equals(other.prictureName)) {
+		} else if (!pictureName.equals(other.pictureName)) {
 			return false;
 		}
-		if (prictureNo != other.prictureNo) {
+		if (pictureNo != other.pictureNo) {
 			return false;
 		}
-		if (prictureUrl == null) {
-			if (other.prictureUrl != null) {
+		if (pictureUrl == null) {
+			if (other.pictureUrl != null) {
 				return false;
 			}
-		} else if (!prictureUrl.equals(other.prictureUrl)) {
+		} else if (!pictureUrl.equals(other.pictureUrl)) {
 			return false;
 		}
 		return true;
 	}
 
+
+	
 	
 	
 }
